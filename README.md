@@ -1,0 +1,54 @@
+# FsBlog
+
+**FsBlog** aims to be a blog-aware static site generator, mostly built in `F#`. But don't worry, you won't even need to know any F# to get up and running. So long as you are comfortable using a command line or terminal, and have a degree of familiarity with Markdown and Razor syntax - you're good to go!
+
+Inspired by the likes of **Jekyll** and **Octopress** - and greatly helped along the way by the scripts behind @tpetricek's [personal website](https://github.com/tpetricek/TomaspNet.Website); FsBlog gives the average F# and .NET hacker the tools they need to get a statically built website up and running quickly and hosted somewhere like [GitHub Pages](http://pages.github.com/).
+
+This set of tools have been pulled together using some of the following community projects:
+
+* [FAKE](http://fsharp.github.io/FAKE/) for the automation and scripting of the different tasks.
+* [F# Formatting](http://tpetricek.github.io/FSharp.Formatting/) which deals with the Markdown and F# processing/colorization.
+* [RazorEngine](https://github.com/Antaris/RazorEngine) which is used for the templating and embedded C# code.
+* Some of the code that calls *RazorEngine* from F# is based on [Tilde](https://github.com/aktowns/tilde).
+
+## Usage
+
+Grab the **NuGet** package or fork/clone the [FsBlog repo](https://github.com/saxonmatt/FsBlog) and use some of the following commands:
+
+    fake generate
+
+Regenerates the entire static website from source files (Markdown and `.fsx` files).
+
+    fake preview
+
+Starts up a local web server and launches the output content from the last time it was generated.
+
+    fake generateAndPreview
+
+Will both generate the website from source, and then launch it in a local web server to be previewed - all in one command!
+
+    fake
+
+But `generateAndPreview` is also the *default* behaviour when you run the `fake` command without any arguments - so that makes it even easier.
+
+    fake newPost "hello world"
+
+Will create a new *blank* Markdown file in your blog's source files ready for you to hack away at your next blog post.
+
+	fake newPost "hello fsx" fsx
+
+Will create a new *blank* `.fsx` file in your blog's source files ready for you to hack away at your next code-heavy blog post. To find out more about using `.fsx` files as the source of your posts, check out [F# Formatting: Literate programming](http://tpetricek.github.io/FSharp.Formatting/demo.html).
+
+    fake deploy
+
+When you're happy with your work you can publish your website with a deploy task.
+
+    fake commit
+
+...and don't forget to commit your source files as well!
+
+## Remarks
+
+Note: the documentation above is currently little more than a specification for the command line tooling. It is currently subject to change.
+
+This project is at a very early stage - so bare with me.

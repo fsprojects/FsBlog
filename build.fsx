@@ -15,9 +15,7 @@ Target "GenerateAndPreview" DoNothing
 
 Target "Deploy" DoNothing
 
-"Generate"
-    ==> "Preview"
-    ==> "GenerateAndPreview"
+"Generate" ==> "GenerateAndPreview"
 
 // --------------------------------------------------------------------------------------
 // Build the tools as a separate set of targets.
