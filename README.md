@@ -21,15 +21,11 @@ Regenerates the entire static website from source files (Markdown and `.fsx` fil
 
     fake preview
 
-Starts up a local web server and launches the output content from the last time it was generated.
-
-    fake generateAndPreview
-
-Will both generate the website from source, and then launch it in a local web server to be previewed - all in one command!
+Generates the site and then starts up a local web server and launches the output content from the last time it was generated.
 
     fake
 
-But `generateAndPreview` is also the *default* behaviour when you run the `fake` command without any arguments - so that makes it even easier.
+But `preview` is also the *default* behaviour when you run the `fake` command without any arguments - so that makes it even easier.
 
     fake newPost "hello world"
 
