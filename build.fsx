@@ -46,4 +46,4 @@ Target "Build" DoNothing
 // --------------------------------------------------------------------------------------
 // Run a specified target.
 // --------------------------------------------------------------------------------------
-RunTargetOrDefault "GenerateAndPreview"
+RunTargetOrDefault "Preview"
