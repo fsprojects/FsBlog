@@ -11,9 +11,17 @@ This set of tools have been pulled together using some of the following communit
 * [RazorEngine](https://github.com/Antaris/RazorEngine) which is used for the templating and embedded C# code.
 * Some of the code that calls *RazorEngine* from F# is based on [Tilde](https://github.com/aktowns/tilde).
 
-## Usage
+## Getting started
 
-Grab the **NuGet** package or fork/clone the [FsBlog repo](https://github.com/saxonmatt/FsBlog) and use some of the following commands:
+You can just grab the **NuGet** package and jump straight on to **Usage** below.
+
+Alternatively you can fork or clone the [FsBlog repo](https://github.com/saxonmatt/FsBlog), then run:
+
+    build
+
+This will build the tools required for usage below.
+
+## Usage
 
     fake generate
 

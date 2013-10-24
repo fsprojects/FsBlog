@@ -2,59 +2,73 @@
 open Fake
 open Fake.Git
 open Fake.AssemblyInfoFile
+open Fake.ReleaseNotesHelper
 open System
+
 
 // --------------------------------------------------------------------------------------
 // Important variables.
 // --------------------------------------------------------------------------------------
 Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
+let release = parseReleaseNotes (IO.File.ReadAllLines "RELEASE_NOTES.md")
+
+// Information about the project to be used 
+//  - by NuGet
+//  - in AssemblyInfo files
+//  - in FAKE tasks
+let solution  = "FsBlog"
+let project   = "FsBlogLib"
+let authors   = [ "matt ball"; "tomas petricek"; ]
+let summary   = "Blog aware, static site generation using F#."
+let description = """
+  FsBlog aims to be a blog-aware static site generator, mostly built in F#. But don't worry, 
+  you won't even need to know any F# to get up and running. So long as you are comfortable 
+  using a command line or terminal, and have a degree of familiarity with Markdown and Razor 
+  syntax - you're good to go!"""
+
+let tags = "F# fsharp blog website generation"
+
+// Generate assembly info files with the right version & up-to-date information
+Target "AssemblyInfo" (fun _ ->
+  let fileName = "tools/" + project + "/AssemblyInfo.fs"
+  CreateFSharpAssemblyInfo fileName
+      [ Attribute.Title project
+        Attribute.Product project
+        Attribute.Description summary
+        Attribute.Version release.AssemblyVersion
+        Attribute.FileVersion release.AssemblyVersion ] 
+)
+
 
 // --------------------------------------------------------------------------------------
-// Restore all missing NuGet packages.
+// Tasks for running the build of tools.
 // --------------------------------------------------------------------------------------
 Target "RestorePackages" (fun _ ->
     !! "./**/packages.config" 
     |> Seq.iter (RestorePackage (fun p -> { p with ToolPath = "./.nuget/nuget.exe" }))
 )
 
-// --------------------------------------------------------------------------------------
-// Static site tooling as a set of targets.
-// --------------------------------------------------------------------------------------
-Target "Generate" DoNothing
 
-Target "Preview" DoNothing
-
-Target "New" (fun _ ->
-    let post, fsx = 
-        getBuildParam "post", getBuildParam "fsx"
-    
-    match post, fsx with
-    | "", "" -> traceError "Please specify either a new 'post' or 'fsx'."
-    | _, "" -> trace (sprintf "Creating new markdown post '%s'." post)
-    | "", _ -> trace (sprintf "Creating new fsx post '%s'." fsx)
-    | _, _ -> traceError "Please specify only one argument, 'post' or 'fsx'."
+Target "Clean" (fun _ ->
+    CleanDirs ["bin"]
 )
 
-Target "Deploy" DoNothing
+Target "Build" (fun _ ->
+    { BaseDirectories = [__SOURCE_DIRECTORY__]
+      Includes = [ solution +       ".sln" ]
+      Excludes = [] } 
+    |> Scan
+    |> MSBuildRelease "bin/FsBlogLib" "Rebuild"
+    |> ignore
+)
 
-Target "Commit" DoNothing
-
-"RestorePackages"
-    ==> "Generate" 
-    ==> "Preview"
-
-// --------------------------------------------------------------------------------------
-// Build the tools as a separate set of targets.
-// --------------------------------------------------------------------------------------
-Target "Clean" DoNothing
-
-Target "Build" DoNothing
-
-"RestorePackages"
-    ==> "Clean"
-    ==> "Build"    
 
 // --------------------------------------------------------------------------------------
-// Run a specified target.
+// Build dependencies.
 // --------------------------------------------------------------------------------------
-RunTargetOrDefault "Preview"
+"Clean"
+    ==> "AssemblyInfo"
+    ==> "RestorePackages"
+    ==> "Build"
+
+RunTargetOrDefault "Build"
