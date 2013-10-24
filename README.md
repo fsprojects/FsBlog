@@ -27,11 +27,11 @@ Generates the site and then starts up a local web server and launches the output
 
 But `preview` is also the *default* behaviour when you run the `fake` command without any arguments - so that makes it even easier.
 
-    fake newPost "hello world"
+    fake new post="hello markdown"
 
 Will create a new *blank* Markdown file in your blog's source files ready for you to hack away at your next blog post.
 
-	fake newPost "hello fsx" fsx
+	fake new fsx="hello fsharp"
 
 Will create a new *blank* `.fsx` file in your blog's source files ready for you to hack away at your next code-heavy blog post. To find out more about using `.fsx` files as the source of your posts, check out [F# Formatting: Literate programming](http://tpetricek.github.io/FSharp.Formatting/demo.html).
 
