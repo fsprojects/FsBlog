@@ -1,4 +1,14 @@
-﻿#r "packages/FAKE/tools/FakeLib.dll"
+﻿(**
+# Build Script
+
+This script is intended for use with [FAKE][fake] for the build process of the
+**FsBlog** tools themselves.
+
+ [fake]: http://fsharp.github.io/FAKE/
+*)
+
+
+#r "packages/FAKE/tools/FakeLib.dll"
 open Fake
 open Fake.Git
 open Fake.AssemblyInfoFile

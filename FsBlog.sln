@@ -10,6 +10,12 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsBlogLib", "tools\FsBlogLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpFormat", "tools\CSharpFormat\CSharpFormat.csproj", "{9AB3650B-CC24-4404-A175-A573DA928475}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{14C8B79A-1276-4B1C-BE97-4ED715860DE8}"
+	ProjectSection(SolutionItems) = preProject
+		build.fsx = build.fsx
+		fsblog.fsx = fsblog.fsx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
