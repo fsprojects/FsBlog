@@ -1,19 +1,28 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{8E03BE4F-38F8-4701-AF77-B49950F254F5}"
 	ProjectSection(SolutionItems) = preProject
 		tools\packages.config = tools\packages.config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{14C8B79A-1276-4B1C-BE97-4ED715860DE8}"
+	ProjectSection(SolutionItems) = preProject
+		build.fsx = build.fsx
+		fsblog.fsx = fsblog.fsx
 	EndProjectSection
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsBlogLib", "tools\FsBlogLib\FsBlogLib.fsproj", "{B83F5E3E-8CEC-4F4E-B251-D2C853816C62}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpFormat", "tools\CSharpFormat\CSharpFormat.csproj", "{9AB3650B-CC24-4404-A175-A573DA928475}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{14C8B79A-1276-4B1C-BE97-4ED715860DE8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "layouts", "layouts", "{BDAF64FC-970C-4227-8BB0-878E6AA012E4}"
 	ProjectSection(SolutionItems) = preProject
-		build.fsx = build.fsx
-		fsblog.fsx = fsblog.fsx
+		layouts\default.cshtml = layouts\default.cshtml
+		layouts\page.cshtml = layouts\page.cshtml
+		layouts\post.cshtml = layouts\post.cshtml
 	EndProjectSection
 EndProject
 Global

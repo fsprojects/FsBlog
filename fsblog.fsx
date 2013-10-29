@@ -6,11 +6,13 @@ and tasks that operate with the static site generation.
 *)
 
 #r "packages/FAKE/tools/FakeLib.dll"
-#r "bin/FsBlogLib/FsBlogLib.dll"
 #r "bin/FsBlogLib/RazorEngine.dll"
+#r "bin/FsBlogLib/FsBlogLib.dll"
 open Fake
 open System
 open System.IO
+open System.Text.RegularExpressions
+open RazorEngine
 open FsBlogLib.FileHelpers
 open FsBlogLib.BlogPosts
 open FsBlogLib.Blog
@@ -18,7 +20,7 @@ open FSharp.Http
 
 
 // --------------------------------------------------------------------------------------
-// Important variables.
+// Configuration.
 // --------------------------------------------------------------------------------------
 Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
 let root = "http://saxonmatt.co.uk/fsblog"
@@ -113,11 +115,41 @@ Target "Preview" (fun _ ->
 Target "New" (fun _ ->
     let post, fsx = 
         getBuildParam "post", getBuildParam "fsx"
-    
+
+    let year, month, day = 
+        DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day
+
+    let makeFilename dir year month day text ext = 
+        let appendExtension s = sprintf "%s.%s" s ext
+        Regex.Matches(text, @"\w+")
+        |> Seq.cast<Match>
+        |> Seq.map (fun m -> m.ToString().ToLower())
+        |> Seq.fold (fun url m -> (sprintf "%s-%s" url m)) (sprintf "%s/%i-%i-%i" dir year month day)
+        |> appendExtension
+
+    let createPost filename createHeader = 
+        File.WriteAllText(filename, createHeader())
+
+    let createMarkdown year month day title filename =
+        let markdownHeader() = "@{}"
+        traceImportant (sprintf "Creating markdown blog post: '%s'" filename)
+        createPost filename markdownHeader
+
+    let createFsx year month day title filename =
+        let fsxHeader() = "(*@*)"
+        traceImportant (sprintf "Creating fsx blog post: '%s'" filename)
+        createPost filename fsxHeader
+
+    let directory = sprintf "%s/" blog
+    EnsureDirectory directory
     match post, fsx with
     | "", "" -> traceError "Please specify either a new 'post' or 'fsx'."
-    | _, "" -> trace (sprintf "Creating new markdown post '%s'." post)
-    | "", _ -> trace (sprintf "Creating new fsx post '%s'." fsx)
+    | _, "" -> 
+        makeFilename directory year month day post "md"
+        |> createMarkdown year month day post
+    | "", _ -> 
+        makeFilename directory year month day fsx "fsx"
+        |> createFsx year month day fsx
     | _, _ -> traceError "Please specify only one argument, 'post' or 'fsx'."
 )
 
