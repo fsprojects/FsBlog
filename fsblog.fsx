@@ -132,23 +132,7 @@ Target "Commit" DoNothing
 
 "Generate" ==> "Preview"
 
-Target "Help" (fun _ ->
-    traceImportant "Welcome to FsBlog!"
-    trace          ""
-    traceImportant "Usage:"
-    traceImportant "fake <command> <args optional>"
-    trace          ""
-    traceImportant "Commands available:"
-    traceImportant " 1. generate"
-    traceImportant " 2. preview"
-    traceImportant " 3. new [args]"
-    traceImportant "       post=\"hello markdown post\""
-    traceImportant "        fsx=\"hello fsx post\""
-    traceImportant " 4. help"
-    trace          ""
-)
-
 // --------------------------------------------------------------------------------------
 // Run a specified target.
 // --------------------------------------------------------------------------------------
-RunTargetOrDefault "Help"
+RunTargetOrDefault "Preview"
