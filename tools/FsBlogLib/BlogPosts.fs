@@ -32,7 +32,7 @@ module BlogPosts =
   let scriptHeaderRegex = 
     Regex("^\(\*\@(?<header>[^\*]*)\*\)(?<content>.*)$", RegexOptions.Singleline)
   let razorHeaderRegex = 
-    Regex("^\@{(?<header>[^\*]*)}(?<content>.*)$", RegexOptions.Singleline)
+    Regex("^\@{(?<header>[^}]*)}(?<content>.*)$", RegexOptions.Singleline)
 
   /// An FSX file must start with a header (*@ ... *) which is removed 
   /// before Literate processing (and then added back as @{ ... }
