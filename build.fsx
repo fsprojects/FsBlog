@@ -40,6 +40,7 @@ let tags = "F# fsharp blog website generation"
 
 // Generate assembly info files with the right version & up-to-date information
 Target "AssemblyInfo" (fun _ ->
+
   let fileName = "tools/" + project + "/AssemblyInfo.fs"
   CreateFSharpAssemblyInfo fileName
       [ Attribute.Title project

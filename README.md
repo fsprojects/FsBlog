@@ -10,7 +10,6 @@ This set of tools have been pulled together using some of the following communit
 * [F# Formatting](http://tpetricek.github.io/FSharp.Formatting/) which deals with the Markdown and F# processing/colorization.
 * [RazorEngine](https://github.com/Antaris/RazorEngine) which is used for the templating and embedded C# code.
 * Some of the code that calls *RazorEngine* from F# is based on [Tilde](https://github.com/aktowns/tilde).
-* The [justin kelly theme](https://github.com/wallace/justin-kelly-theme)
 
 ## Getting started
 
@@ -35,6 +34,10 @@ Generates the site and then starts up a local web server and launches the output
     fake
 
 But `preview` is also the *default* behaviour when you run the `fake` command without any arguments - so that makes it even easier.
+
+	fake new page="about fsblog"
+
+Will create a new *blank* Markdown file in your blog's source files ready for you to author a non-post page of content.
 
     fake new post="hello markdown"
 

@@ -32,7 +32,7 @@ let description = """
     syntax - you're good to go!"""
 
 let source = __SOURCE_DIRECTORY__ ++ "source"
-let blog = __SOURCE_DIRECTORY__ ++ "source/blog"
+let blog = __SOURCE_DIRECTORY__ ++ "source"
 let blogIndex = __SOURCE_DIRECTORY__ ++ "source/blog/index.cshtml"
 let layouts = __SOURCE_DIRECTORY__ ++ "layouts"
 let content = __SOURCE_DIRECTORY__ ++ "content"
@@ -112,45 +112,19 @@ Target "Preview" (fun _ ->
     run ()
 )
 
-Target "New" (fun _ ->
-    let post, fsx = 
-        getBuildParam "post", getBuildParam "fsx"
-
-    let year, month, day = 
-        DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day
-
-    let makeFilename dir year month day text ext = 
-        let appendExtension s = sprintf "%s.%s" s ext
-        Regex.Matches(text, @"\w+")
-        |> Seq.cast<Match>
-        |> Seq.map (fun m -> m.ToString().ToLower())
-        |> Seq.fold (fun url m -> (sprintf "%s-%s" url m)) (sprintf "%s/%i-%i-%i" dir year month day)
-        |> appendExtension
-
-    let createPost filename createHeader = 
-        File.WriteAllText(filename, createHeader())
-
-    let createMarkdown year month day title filename =
-        let markdownHeader() = "@{}"
-        traceImportant (sprintf "Creating markdown blog post: '%s'" filename)
-        createPost filename markdownHeader
-
-    let createFsx year month day title filename =
-        let fsxHeader() = "(*@*)"
-        traceImportant (sprintf "Creating fsx blog post: '%s'" filename)
-        createPost filename fsxHeader
-
+Target "New" (fun _ ->       
+    let post, fsx, page = 
+        getBuildParam "post", 
+        getBuildParam "fsx",
+        getBuildParam "page"    
+    
     let directory = sprintf "%s/" blog
-    EnsureDirectory directory
-    match post, fsx with
-    | "", "" -> traceError "Please specify either a new 'post' or 'fsx'."
-    | _, "" -> 
-        makeFilename directory year month day post "md"
-        |> createMarkdown year month day post
-    | "", _ -> 
-        makeFilename directory year month day fsx "fsx"
-        |> createFsx year month day fsx
-    | _, _ -> traceError "Please specify only one argument, 'post' or 'fsx'."
+    match page, post, fsx with
+    | "", "", "" -> traceError "Please specify either a new 'page', 'post' or 'fsx'."
+    | _, "", ""  -> traceError "CreatePage not implemented yet."
+    | "", _, ""  -> CreateMarkdownPost directory post
+    | "", "", _  -> CreateFsxPost directory fsx
+    | _, _, _    -> traceError "Please specify only one argument, 'post' or 'fsx'."
 )
 
 Target "Deploy" DoNothing
@@ -159,8 +133,23 @@ Target "Commit" DoNothing
 
 "Generate" ==> "Preview"
 
+Target "Help" (fun _ ->
+    traceImportant "Welcome to FsBlog!"
+    trace          ""
+    traceImportant "Usage:"
+    traceImportant "fake <command> <args optional>"
+    trace          ""
+    traceImportant "Commands available:"
+    traceImportant " 1. generate"
+    traceImportant " 2. preview"
+    traceImportant " 3. new [args]"
+    traceImportant "       post=\"hello markdown post\""
+    traceImportant "        fsx=\"hello fsx post\""
+    traceImportant " 4. help"
+    trace          ""
+)
 
 // --------------------------------------------------------------------------------------
 // Run a specified target.
 // --------------------------------------------------------------------------------------
-RunTargetOrDefault "Preview"
+RunTargetOrDefault "Help"

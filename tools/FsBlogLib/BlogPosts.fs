@@ -96,3 +96,52 @@ module BlogPosts =
     |> Seq.sortBy (fun b -> b.Date)
     |> Array.ofSeq 
     |> Array.rev
+ 
+  let markdownHeader (date:System.DateTime) title =
+     sprintf """@{
+    Layout = "post";
+    Title = "%s";
+    Date = "%s";
+    Tags = "";
+    Description = "";
+}"""    title (date.ToString("yyyy-MM-ddThh:mm:ss"))
+
+  let fsxHeader (date:System.DateTime) title = 
+     sprintf """(*@
+    Layout = "post";
+    Title = "%s";
+    Date = "%s";
+    Tags = "";
+    Description = "";
+*)"""   title (date.ToString("yyyy-MM-ddThh:mm:ss"))
+
+  /// News up a file at a specified path/filename with initial content generated
+  /// from a header creation function.
+  let CreateFile path createHeader ext title = 
+
+    let append a b = sprintf "%s%s" b a
+  
+    // Perhaps parametize this and bubble it up as a requirement?
+    let now = System.DateTime.Now
+
+    let dir = Path.Combine([|path;(sprintf "%i" now.Year)|])
+    
+    // Maybe use some kind of url formatting callback?
+    let filename = 
+        Regex.Matches(title, @"\w+")
+        |> Seq.cast<Match>
+        |> Seq.map (fun m -> m.ToString().ToLower())
+        |> Seq.fold (fun s m -> (sprintf "%s-%s" s m)) (sprintf "%s/%s" dir (now.ToString("yyyy-MM-dd")))
+        |> append "."
+        |> append ext
+
+    EnsureDirectory(dir)
+    File.WriteAllText(filename, (createHeader now title))
+
+  /// Creates a new blank markdown post.
+  let CreateMarkdownPost path title = 
+    CreateFile path markdownHeader "md" title
+
+  /// Creates a new blank fsx post.
+  let CreateFsxPost path title = 
+    CreateFile path fsxHeader "fsx" title
