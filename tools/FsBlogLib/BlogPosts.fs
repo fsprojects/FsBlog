@@ -97,14 +97,14 @@ module BlogPosts =
     |> Array.ofSeq 
     |> Array.rev
  
-  let markdownHeader (date:System.DateTime) title =
+  let markdownHeader layout (date:System.DateTime) title =
      sprintf """@{
-    Layout = "post";
+    Layout = "%s";
     Title = "%s";
     Date = "%s";
     Tags = "";
     Description = "";
-}"""    title (date.ToString("yyyy-MM-ddThh:mm:ss"))
+}"""    layout title (date.ToString("yyyy-MM-ddThh:mm:ss"))
 
   let fsxHeader (date:System.DateTime) title = 
      sprintf """(*@
@@ -135,7 +135,7 @@ module BlogPosts =
     
     let filename = dir + "/index.md"
     EnsureDirectory(dir)
-    File.WriteAllText(filename, (markdownHeader now title))
+    File.WriteAllText(filename, (markdownHeader "page" now title))
 
   /// News up a file at a specified path/filename with initial content generated
   /// from a header creation function.
@@ -162,7 +162,7 @@ module BlogPosts =
 
   /// Creates a new blank markdown post.
   let CreateMarkdownPost path title = 
-    CreateFile path markdownHeader "md" title
+    CreateFile path (markdownHeader "post") "md" title
 
   /// Creates a new blank fsx post.
   let CreateFsxPost path title = 
