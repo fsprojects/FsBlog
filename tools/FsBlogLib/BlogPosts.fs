@@ -115,6 +115,28 @@ module BlogPosts =
     Description = "";
 *)"""   title (date.ToString("yyyy-MM-ddThh:mm:ss"))
 
+  // Creates a new markdown page.
+  let CreateMarkdownPage path title = 
+
+    let now = System.DateTime.Now
+
+    let prepend a b = sprintf "%s%s" a b
+
+    let dir =  
+        Regex.Matches(title, @"\w+")
+        |> Seq.cast<Match>
+        |> Seq.map (fun m -> m.ToString().ToLower())
+        |> Seq.fold (fun s m -> 
+            match s with
+            | "" -> m
+            | _  -> (sprintf "%s-%s" s m)
+        ) ""
+        |> prepend path
+    
+    let filename = dir + "/index.md"
+    EnsureDirectory(dir)
+    File.WriteAllText(filename, (markdownHeader now title))
+
   /// News up a file at a specified path/filename with initial content generated
   /// from a header creation function.
   let CreateFile path createHeader ext title = 

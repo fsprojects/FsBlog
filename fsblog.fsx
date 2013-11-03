@@ -31,8 +31,8 @@ let description = """
     using a command line or terminal, and have a degree of familiarity with Markdown and Razor 
     syntax - you're good to go!"""
 
-let source = __SOURCE_DIRECTORY__ ++ "source"
-let blog = __SOURCE_DIRECTORY__ ++ "source/blog"
+let source = __SOURCE_DIRECTORY__ ++ "source/"
+let blog = __SOURCE_DIRECTORY__ ++ "source/blog/"
 let blogIndex = __SOURCE_DIRECTORY__ ++ "source/blog/index.cshtml"
 let layouts = __SOURCE_DIRECTORY__ ++ "layouts"
 let content = __SOURCE_DIRECTORY__ ++ "content"
@@ -118,12 +118,11 @@ Target "New" (fun _ ->
         getBuildParam "fsx",
         getBuildParam "page"    
     
-    let directory = sprintf "%s/" blog
     match page, post, fsx with
     | "", "", "" -> traceError "Please specify either a new 'page', 'post' or 'fsx'."
-    | _, "", ""  -> traceError "CreatePage not implemented yet."
-    | "", _, ""  -> CreateMarkdownPost directory post
-    | "", "", _  -> CreateFsxPost directory fsx
+    | _, "", ""  -> CreateMarkdownPage source page
+    | "", _, ""  -> CreateMarkdownPost blog post
+    | "", "", _  -> CreateFsxPost blog fsx
     | _, _, _    -> traceError "Please specify only one argument, 'post' or 'fsx'."
 )
 
