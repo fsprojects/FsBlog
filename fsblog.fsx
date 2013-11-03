@@ -32,7 +32,7 @@ let description = """
     syntax - you're good to go!"""
 
 let source = __SOURCE_DIRECTORY__ ++ "source"
-let blog = __SOURCE_DIRECTORY__ ++ "source"
+let blog = __SOURCE_DIRECTORY__ ++ "source/blog"
 let blogIndex = __SOURCE_DIRECTORY__ ++ "source/blog/index.cshtml"
 let layouts = __SOURCE_DIRECTORY__ ++ "layouts"
 let content = __SOURCE_DIRECTORY__ ++ "content"

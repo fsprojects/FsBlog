@@ -131,7 +131,7 @@ module BlogPosts =
         Regex.Matches(title, @"\w+")
         |> Seq.cast<Match>
         |> Seq.map (fun m -> m.ToString().ToLower())
-        |> Seq.fold (fun s m -> (sprintf "%s-%s" s m)) (sprintf "%s/%s" dir (now.ToString("yyyy-MM-dd")))
+        |> Seq.fold (fun s m -> (sprintf "%s-%s" s m)) (sprintf "%s/%s" dir (now.ToString("MM-dd")))
         |> append "."
         |> append ext
 
