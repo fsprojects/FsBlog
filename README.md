@@ -10,6 +10,7 @@ This set of tools have been pulled together using some of the following communit
 * [F# Formatting](http://tpetricek.github.io/FSharp.Formatting/) which deals with the Markdown and F# processing/colorization.
 * [RazorEngine](https://github.com/Antaris/RazorEngine) which is used for the templating and embedded C# code.
 * Some of the code that calls *RazorEngine* from F# is based on [Tilde](https://github.com/aktowns/tilde).
+* [Bootstrap 3](http://getbootstrap.com/).
 
 ## Getting started
 
