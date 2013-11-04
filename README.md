@@ -1,5 +1,7 @@
 # FsBlog
 
+[Trello Board](https://trello.com/b/WHi1UnxT/fsblog).
+
 **FsBlog** aims to be a blog-aware static site generator, mostly built in `F#`. But don't worry, you won't even need to know any F# to get up and running. So long as you are comfortable using a command line or terminal, and have a degree of familiarity with Markdown and Razor syntax - you're good to go!
 
 Inspired by the likes of **Jekyll** and **Octopress** - and greatly helped along the way by the scripts behind [@tomaspetricek](https://twitter.com/tomaspetricek)'s [personal website](https://github.com/tpetricek/TomaspNet.Website); FsBlog gives the average F# and .NET hacker the tools they need to get a statically built website up and running quickly and hosted somewhere like [GitHub Pages](http://pages.github.com/).
