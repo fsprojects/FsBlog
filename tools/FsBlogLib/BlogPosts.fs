@@ -57,8 +57,8 @@ module BlogPosts =
       failwithf "The following source file is missing a header:\n%s" file  
 
     // Read abstract file and transform it
-    let abstr = transformer prefix (Path.GetDirectoryName(file) ++ "abstracts" ++ Path.GetFileName(file))
-    file, reg.Groups.["header"].Value, abstr
+    // let abstr = transformer prefix (Path.GetDirectoryName(file) ++ "abstracts" ++ Path.GetFileName(file))
+    file, reg.Groups.["header"].Value, "" //abstr
 
   /// Simple function that parses the header of the blog post. Everybody knows
   /// that doing this with regexes is silly, but the blog post headers are simple enough.

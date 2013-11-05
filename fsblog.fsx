@@ -36,7 +36,7 @@ let blog = __SOURCE_DIRECTORY__ ++ "source/blog/"
 let blogIndex = __SOURCE_DIRECTORY__ ++ "source/blog/index.cshtml"
 let layouts = __SOURCE_DIRECTORY__ ++ "layouts"
 let content = __SOURCE_DIRECTORY__ ++ "content"
-let template = __SOURCE_DIRECTORY__ ++ "empty-template.html"
+let template = __SOURCE_DIRECTORY__ ++ "tools/empty-template.html"
 
 let output = __SOURCE_DIRECTORY__ ++ "output"
 
@@ -47,6 +47,7 @@ let dependencies = [ yield! Directory.GetFiles(layouts) ]
 let special =
     [ source ++ "index.cshtml"
       source ++ "blog" ++ "index.cshtml" ]
+let rsscount = 20
 
 
 // --------------------------------------------------------------------------------------
@@ -62,7 +63,7 @@ Target "Generate" (fun _ ->
         let model = LoadModel(tagRenames, TransformAsTemp (template, source) razor, root, blog)
 
         // Generate RSS feed
-        GenerateRss root title description model (output ++ "rss.xml")
+        GenerateRss root title description model rsscount (output ++ "rss.xml")
 
         let uk = System.Globalization.CultureInfo.GetCultureInfo("en-GB")
         GeneratePostListing 

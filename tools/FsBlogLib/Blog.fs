@@ -84,10 +84,11 @@ module Blog =
       TransformFile template false razor (Some prefix) current cached
       File.ReadAllText(cached)
 
-  let GenerateRss root title description model target = 
+  let GenerateRss root title description model take target = 
+    let count = Seq.length model.Posts 
     let (!) name = XName.Get(name)
     let items = 
-      [| for item in model.Posts |> Seq.take 20 ->
+      [| for item in model.Posts |> Seq.take (if count < take then count else take) ->
            XElement
             ( !"item", 
               XElement(!"title", item.Title),
@@ -103,6 +104,7 @@ module Blog =
           XElement(!"description", (description:string)),
           items )
     let doc = XDocument(XElement(!"rss", XAttribute(!"version", "2.0"), channel))
+    EnsureDirectory(Path.GetDirectoryName(target))
     File.WriteAllText(target, doc.ToString())
 
   let GeneratePostListing layouts template blogIndex model posts urlFunc needsUpdate infoFunc getPosts =

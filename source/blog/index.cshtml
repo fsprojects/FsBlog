@@ -1,0 +1,11 @@
+@{
+    Layout = "default";
+    Title = "FsBlog";
+    Description = "A blog aware static site generator in mostly F#";
+}
+@using System.Linq
+
+@foreach (var post in Enumerable.Take(Model.Posts, 10))
+{
+    <a href="blog/@post.Url/index.html">@post.Title</a>
+}
