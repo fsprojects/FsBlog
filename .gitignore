@@ -3,7 +3,7 @@
 
 # FsBlog-specifics
 [Oo]utput/
-_[Dd]eploy/
+[Dd]eploy/
 
 # User-specific files
 *.suo
