@@ -1,4 +1,4 @@
-﻿
+﻿@using System.Linq
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,13 +12,15 @@
     <title>FsBlog</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/offcanvas.css" rel="stylesheet">
+    <link href="/css/offcanvas.css" rel="stylesheet">
 
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
-    <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!-- FSharp.Formatting Styles --> 
+  	<link rel="stylesheet" type="text/css" media="screen" href="/fsharp.formatting/tooltips.css" /> 
+  	<script type="text/javascript" src="/fsharp.formatting/tooltips.js"></script>
+
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -58,15 +60,17 @@
                     <p>Blog aware static site generation, using F# for .NET and Mono.</p>
                 </div>
                 <div class="row">
-                    @RenderBody()-->
+                    @RenderBody()
                 </div><!--/row-->
             </div><!--/span-->
 
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
                 <div class="list-group">
-                    <a href="#" class="list-group-item active">Recent post 1</a>
-                    <a href="#" class="list-group-item">Recent post 2</a>
-                    <a href="#" class="list-group-item">Recent post 3</a>
+                    <a href="#" class="list-group-item active">Recent Posts</a>
+                    @foreach(var post in Enumerable.Take(Model.Posts, 10)) 
+                    {
+                    <a href="/@post.Url" class="list-group-item">@post.Title</a>
+                    }
                 </div>
             </div><!--/span-->
         </div><!--/row-->
@@ -74,7 +78,9 @@
         <hr>
 
         <footer>
-            <p>&copy; Company 2013</p>
+        	<p>Website created with <a href="https://github.com/saxonmatt/FsBlog" title="Check FsBlog on Github">FsBlog</a>
+        	and hosted for free on <a href="" title="Github Pages">Github Pages</a>.</p>
+            <p><strong>License:</strong>All source code samples are licensed under Apache 2.0.</p>
         </footer>
 
     </div><!--/.container-->
@@ -82,7 +88,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/offcanvas.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/offcanvas.js"></script>
 </body>
 </html>
