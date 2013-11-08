@@ -111,6 +111,10 @@ Target "Preview" (fun _ ->
         System.Diagnostics.Process.Start(url) |> ignore
         
     run ()
+
+    traceImportant "Press Ctrl+C to stop!"
+    // wat!?    
+    while true do ()
 )
 
 Target "New" (fun _ ->       
