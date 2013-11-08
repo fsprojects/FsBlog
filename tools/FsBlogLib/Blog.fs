@@ -48,7 +48,7 @@ module Blog =
         |> Array.ofSeq
       Root = root.Replace('\\', '/') }
 
-  let TransformFile template hasHeader (razor:FsBlogLib.Razor) prefix current target = 
+  let TransformFile template hasHeader (razor:FsBlogLib.Razor) prefix current target =     
     let html =
       match Path.GetExtension(current).ToLower() with
       | (".fsx" | ".md") as ext ->

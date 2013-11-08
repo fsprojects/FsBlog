@@ -59,7 +59,7 @@ module FileHelpers =
         yield! getFiles dir }
     for file in getFiles source do
       if exts |> Set.contains (Path.GetExtension(file).ToLower()) then
-        let relativeFile = file.Remove(0, source.Length + 1)
+        let relativeFile = file 
         let relativeFolder = 
           let idx = relativeFile.LastIndexOf('.') 
           relativeFile.Substring(0, idx)
@@ -94,7 +94,7 @@ module FileHelpers =
   /// For files in the root, generate just /index.html (etc.)
   let TransformOutputFiles (output:string) files = seq {
     for file, (target:string) in files ->
-      let relativeOut = target.Substring(output.Length + 1)
+      let relativeOut = target.Substring(output.Length)
       // If it is not index & it is not in the root directory, then make it a sub-dir
       if not (relativeOut.EndsWith("index")) && (relativeOut.Contains("\\") || relativeOut.Contains("/"))
       then file, output ++ relativeOut ++ "index.html"

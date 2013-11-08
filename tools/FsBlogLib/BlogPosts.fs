@@ -74,7 +74,7 @@ module BlogPosts =
                 let value = String.concat "=" values
                 key.Trim(), concatRegex.Replace(value.Trim(' ', '\t', '\n', '\r', '"'), "")
             | _ -> failwithf "Invalid header in the following blog file: %s" file ) |> dict
-      let relativeFile = file.Substring(blog.Length + 1)
+      let relativeFile = file.Substring(blog.Length)
       let relativeFile = let idx = relativeFile.LastIndexOf('.') in relativeFile.Substring(0, idx)
       try
         { Title = lookup.["Title"]

@@ -38,7 +38,7 @@ let layouts = __SOURCE_DIRECTORY__ ++ "layouts"
 let content = __SOURCE_DIRECTORY__ ++ "content"
 let template = __SOURCE_DIRECTORY__ ++ "tools/empty-template.html"
 
-let output = __SOURCE_DIRECTORY__ ++ "output"
+let output = __SOURCE_DIRECTORY__ ++ "output/"
 
 let tagRenames = List.empty<string*string> |> dict
 let exclude = []
@@ -90,7 +90,7 @@ Target "Generate" (fun _ ->
         let razor = FsBlogLib.Razor(layouts, Model = model)
         for current, target in filesToProcess do
             EnsureDirectory(Path.GetDirectoryName(target))
-            printfn "Processing file: %s" (current.Substring(source.Length + 1))
+            printfn "Processing file: %s" (current.Substring(source.Length))
             TransformFile template true razor None current target
 
         CopyFiles content output 
