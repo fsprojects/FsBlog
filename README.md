@@ -1,6 +1,6 @@
 # FsBlog
 
-[Trello Board](https://trello.com/b/WHi1UnxT/fsblog).
+**Progress:** See the Issues and Milestones pages of this repo.
 
 **FsBlog** aims to be a blog-aware static site generator, mostly built in `F#`. But don't worry, you won't even need to know any F# to get up and running. So long as you are comfortable using a command line or terminal, and have a degree of familiarity with Markdown and Razor syntax - you're good to go!
 
