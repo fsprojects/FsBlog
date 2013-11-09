@@ -1,94 +1,50 @@
 ﻿@using System.Linq
-<!DOCTYPE html>
-<html lang="en">
-<head>
+@helper PostDate(DateTime rawDate) {
+    <time datetime="@rawDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss")" pubdate data-updated="true">@rawDate.ToString("MMM d, yyyy")</time>
+}
+
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="favicon.png">
-
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>FsBlog</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="/css/offcanvas.css" rel="stylesheet">
-
-    <!-- FSharp.Formatting Styles --> 
-  	<link rel="stylesheet" type="text/css" media="screen" href="/fsharp.formatting/tooltips.css" /> 
-  	<script type="text/javascript" src="/fsharp.formatting/tooltips.js"></script>
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <link rel="stylesheet" href="@Model.Root/stylesheets/styles.css">
+    <link rel="stylesheet" href="@Model.Root/stylesheets/pygment_trac.css">
+    <link rel="shortcut icon" href="favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-</head>
-
-<body>
-    <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">FsBlog</a>
-            </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                </ul>
-            </div><!-- /.nav-collapse -->
-        </div><!-- /.container -->
-    </div><!-- /.navbar -->
-
-    <div class="container">
-
-        <div class="row row-offcanvas row-offcanvas-right">
-
-            <div class="col-xs-12 col-sm-9">
-                <p class="pull-right visible-xs">
-                    <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
-                </p>
-                <div class="jumbotron">
-                    <h1>FsBlog</h1>
-                    <p>Blog aware static site generation, using F# for .NET and Mono.</p>
-                </div>
-                <div class="row">
-                    @RenderBody()
-                </div><!--/row-->
-            </div><!--/span-->
-
-            <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-                <div class="list-group">
-                    <a href="#" class="list-group-item active">Recent Posts</a>
-                    @foreach(var post in Enumerable.Take(Model.Posts, 10)) 
-                    {
-                    <a href="/@post.Url" class="list-group-item">@post.Title</a>
-                    }
-                </div>
-            </div><!--/span-->
-        </div><!--/row-->
-
-        <hr>
-
-        <footer>
-        	<p>Website created with <a href="https://github.com/saxonmatt/FsBlog" title="Check FsBlog on Github">FsBlog</a>
-        	and hosted for free on <a href="" title="Github Pages">Github Pages</a>.</p>
-            <p><strong>License:</strong>All source code samples are licensed under Apache 2.0.</p>
-        </footer>
-
-    </div><!--/.container-->
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/offcanvas.js"></script>
-</body>
+    <!-- FSharp.Formatting Styles --> 
+  	<link rel="stylesheet" type="text/css" media="screen" href="@Model.Root/fsharp.formatting/tooltips.css" /> 
+  	<script type="text/javascript" src="@Model.Root/fsharp.formatting/tooltips.js"></script>
+  </head>
+  <body>
+  	<div class="wrapper">
+	  <header>
+	  	<a href"@Model.Root/index.html" class="falseheader">FsBlog</a>
+        <p>Blog aware, static site generation using F#.</p>
+        <p class="view"><a href="https://github.com/saxonmatt/FsBlog">View the Project on GitHub</a></p>
+        <ul>
+          <li><a href="https://github.com/saxonmatt/FsBlog">View On <strong>GitHub</strong></a></li>
+          <li><a href="https://github.com/saxonmatt/FsBlog/issues">Report a <strong>Bug</strong></a></li>
+          <li><a href="https://github.com/saxonmatt/FsBlog/issues/milestones">Check <strong>Progress</strong></a></li>
+        </ul>
+        <h2>Recent posts</h2>
+        @foreach (var post in Enumerable.Take(Model.Posts, 5))
+		{
+		    <p class="view"><a href="@Model.Root/blog/@post.Url/index.html">@post.Title</a>
+		    <small>@PostDate(post.Date)</small></p>
+		}
+      </header>
+      <section>
+		@RenderBody()
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://twitter.com/mattdrivendev">MattDrivenDev</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+  	</div>
+    <script src="@Model.Root/javascripts/scale.fix.js"></script>
+  </body>
 </html>
