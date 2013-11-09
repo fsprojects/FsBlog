@@ -1,0 +1,181 @@
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>FsBlog</title>
+    <link rel="stylesheet" href="http://saxonmatt.co.uk/FsBlog/stylesheets/styles.css">
+    <link rel="stylesheet" href="http://saxonmatt.co.uk/FsBlog/stylesheets/pygment_trac.css">
+    <link rel="shortcut icon" href="http://saxonmatt.co.uk/FsBlog/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!-- FSharp.Formatting Styles --> 
+  	<link rel="stylesheet" type="text/css" media="screen" href="http://saxonmatt.co.uk/FsBlog/fsharp.formatting/tooltips.css" /> 
+  	<script type="text/javascript" src="http://saxonmatt.co.uk/FsBlog/fsharp.formatting/tooltips.js"></script>
+  </head>
+  <body>
+  	<div class="wrapper">
+	  <header>
+	  	  <a href"@Model.Root/index.html" class="falseheader">FsBlog</a>
+        <p>Blog aware, static site generation using F#.</p>
+        <p class="view"><a href="https://github.com/saxonmatt/FsBlog">View the Project on GitHub</a></p>
+        <ul>
+          <li><a href="https://github.com/saxonmatt/FsBlog">View On <strong>GitHub</strong></a></li>
+          <li><a href="https://github.com/saxonmatt/FsBlog/issues">Report a <strong>Bug</strong></a></li>
+          <li><a href="https://github.com/saxonmatt/FsBlog/issues/milestones">Check <strong>Progress</strong></a></li>
+        </ul>
+        <h2>Recent posts</h2>
+    		    <p class="view"><a href="http://saxonmatt.co.uk/FsBlog/blog/2013/11-09-getting-started/index.html">Getting Started</a>
+    		    <small>    <time datetime="2013-11-09T12:38:14" pubdate data-updated="true">Nov 9, 2013</time>
+</small></p>
+    		    <p class="view"><a href="http://saxonmatt.co.uk/FsBlog/blog/2013/11-08-hello-fsblog/index.html">Hello, FsBlog!</a>
+    		    <small>    <time datetime="2013-11-08T11:27:31" pubdate data-updated="true">Nov 8, 2013</time>
+</small></p>
+      </header>
+      <section>
+		    
+
+
+<h1>Getting Started</h1>
+
+<p>If you've much experience with other static site generators like Octopress or Jekyll most of this should be fairly familiar, if not, hopefully it won't be too difficult to pick up.</p>
+
+<h2>Command line</h2>
+
+<p>FsBlog tends to rely on the fact that you're using the command line or terminal - almost all interaction with FsBlog and git are documented as such.</p>
+
+<h2>Dependencies</h2>
+
+<p>Although X-Platform is a goal for the <a href="https://github.com/saxonmatt/FsBlog/issues?milestone=2&amp;state=open">not-too-distant-future</a> - at the moment you'll need:</p>
+
+<ul>
+<li>.NET 4.5</li>
+<li>F# 3.0</li>
+<li>VS2012 or VS2013</li>
+<li>A git client</li>
+</ul>
+
+<p>If you follow the instructions for <a href="http://fsharp.org/use/windows/">using F# on Windows</a> you'll probably be good to go.</p>
+
+<h2>1. Setup FsBlog</h2>
+
+<p>First you'll need to clone the repo. On your command line, using git:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="i">git</span> <span class="i">clone</span> <span class="i">git</span><span class="o">:</span><span class="c">//github.com/saxonmatt/FsBlog.git FsBlog</span>
+<span class="i">cd</span> <span class="i">FsBlog</span></pre>
+</td>
+</tr>
+</table>
+
+<p>Next, run the build:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="i">build</span></pre>
+</td>
+</tr>
+</table>
+
+<p>This should install a few <a href="http://www.nuget.org/">NuGet</a> dependencies that FsBlog makes use of.</p>
+
+<h2>2. Configuration</h2>
+
+<p>Using your favourite F# code editor, edit the following section of the <code>./fsblog.fsx</code> file in your repo:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="c">// --------------------------------------------------------------------------------------</span>
+<span class="c">// Configuration.</span>
+<span class="c">// --------------------------------------------------------------------------------------</span>
+<span class="i">Environment</span><span class="o">.</span><span class="i">CurrentDirectory</span> <span class="o">&lt;-</span> <span class="k">__SOURCE_DIRECTORY__</span>
+<span class="k">let</span> <span class="i">root</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">http</span><span class="s">:</span><span class="s">/</span><span class="s">/</span><span class="s">saxonmatt</span><span class="s">.</span><span class="s">co</span><span class="s">.</span><span class="s">uk</span><span class="s">/</span><span class="s">FsBlog</span><span class="s">&quot;</span>
+<span class="k">let</span> <span class="i">title</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">FsBlog</span><span class="s"> </span><span class="s">-</span><span class="s"> </span><span class="s">F</span><span class="s">#</span><span class="s"> </span><span class="s">static</span><span class="s"> </span><span class="s">site</span><span class="s"> </span><span class="s">generation</span><span class="s">&quot;</span>
+<span class="k">let</span> <span class="i">description</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    </span><span class="s">FsBlog</span><span class="s"> </span><span class="s">aims</span><span class="s"> </span><span class="s">to</span><span class="s"> </span><span class="s">be</span><span class="s"> </span><span class="s">a</span><span class="s"> </span><span class="s">blog</span><span class="s">-</span><span class="s">aware</span><span class="s"> </span><span class="s">static</span><span class="s"> </span><span class="s">site</span><span class="s"> </span><span class="s">generator</span><span class="s">,</span><span class="s"> </span><span class="s">mostly</span><span class="s"> </span><span class="s">built</span><span class="s"> </span><span class="s">in</span><span class="s"> </span><span class="s">F</span><span class="s">#</span><span class="s">.</span><span class="s"> </span><span class="s">But</span><span class="s"> </span><span class="s">don&#39;t</span><span class="s"> </span><span class="s">worry</span><span class="s">,</span><span class="s"> </span>
+<span class="s">    </span><span class="s">you</span><span class="s"> </span><span class="s">won&#39;t</span><span class="s"> </span><span class="s">even</span><span class="s"> </span><span class="s">need</span><span class="s"> </span><span class="s">to</span><span class="s"> </span><span class="s">know</span><span class="s"> </span><span class="s">any</span><span class="s"> </span><span class="s">F</span><span class="s">#</span><span class="s"> </span><span class="s">to</span><span class="s"> </span><span class="s">get</span><span class="s"> </span><span class="s">up</span><span class="s"> </span><span class="s">and</span><span class="s"> </span><span class="s">running</span><span class="s">.</span><span class="s"> </span><span class="s">So</span><span class="s"> </span><span class="s">long</span><span class="s"> </span><span class="s">as</span><span class="s"> </span><span class="s">you</span><span class="s"> </span><span class="s">are</span><span class="s"> </span><span class="s">comfortable</span><span class="s"> </span>
+<span class="s">    </span><span class="s">using</span><span class="s"> </span><span class="s">a</span><span class="s"> </span><span class="s">command</span><span class="s"> </span><span class="s">line</span><span class="s"> </span><span class="s">or</span><span class="s"> </span><span class="s">terminal</span><span class="s">,</span><span class="s"> </span><span class="s">and</span><span class="s"> </span><span class="s">have</span><span class="s"> </span><span class="s">a</span><span class="s"> </span><span class="s">degree</span><span class="s"> </span><span class="s">of</span><span class="s"> </span><span class="s">familiarity</span><span class="s"> </span><span class="s">with</span><span class="s"> </span><span class="s">Markdown</span><span class="s"> </span><span class="s">and</span><span class="s"> </span><span class="s">Razor</span><span class="s"> </span>
+<span class="s">    </span><span class="s">syntax</span><span class="s"> </span><span class="s">-</span><span class="s"> </span><span class="s">you&#39;re</span><span class="s"> </span><span class="s">good</span><span class="s"> </span><span class="s">to</span><span class="s"> </span><span class="s">go</span><span class="s">!</span><span class="s">&quot;&quot;&quot;</span></pre>
+</td>
+</tr>
+</table>
+
+<p>There isn't a whole lot to change right now, but at some point you'll be able to configure a Twitter handle, GitHub account etc.</p>
+
+<h2>3. Create a post</h2>
+
+<p>Again on your command line:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="i">fake</span> <span class="k">new</span> <span class="i">post</span><span class="o">=</span><span class="s">&quot;</span><span class="s">post</span><span class="s"> </span><span class="s">title</span><span class="s">&quot;</span></pre>
+</td>
+</tr>
+</table>
+
+<p>This will create a new file in the following location, ready for you to edit: <code>./source/blog/yyyy/MM-dd-title.md</code>.</p>
+
+<h2>4. Generate and preview</h2>
+
+<p>You can generate your website at any time from the command line using the following command:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="i">fake</span> <span class="i">generate</span></pre>
+</td>
+</tr>
+</table>
+
+<p>If you also want to preview your website, you can run the following command:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="i">fake</span> <span class="i">preview</span></pre>
+</td>
+</tr>
+</table>
+
+<p>The <code>preview</code> command will also <code>generate</code> the website too.</p>
+
+
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://twitter.com/mattdrivendev">MattDrivenDev</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+  	</div>
+    <script src="http://saxonmatt.co.uk/FsBlog/javascripts/scale.fix.js"></script>
+  </body>
+</html>
