@@ -23,7 +23,7 @@ open FSharp.Http
 // Configuration.
 // --------------------------------------------------------------------------------------
 Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
-let root = "http://saxonmatt.co.uk/fsblog"
+let root = "http://saxonmatt.co.uk/FsBlog"
 let title = "FsBlog - F# static site generation"
 let description = """
     FsBlog aims to be a blog-aware static site generator, mostly built in F#. But don't worry, 
