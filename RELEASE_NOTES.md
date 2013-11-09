@@ -6,3 +6,4 @@
 * 0.3.1-beta - fixed a bug in urls pointing to styles etc
 * 0.3.2-beta - fixed a bug with mismatched fsharp.formatting css/js and libs
 * 0.3.3-beta - minor change to fix bug in default layout
+* 0.3.4-beta - fixed a bug where inline code styles were not displaying properly
