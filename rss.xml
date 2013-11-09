@@ -1,7 +1,7 @@
 <rss version="2.0">
   <channel>
     <title>FsBlog - F# static site generation</title>
-    <link>http://saxonmatt.co.uk/fsblog</link>
+    <link>http://saxonmatt.co.uk/FsBlog</link>
     <description>
     FsBlog aims to be a blog-aware static site generator, mostly built in F#. But don't worry, 
     you won't even need to know any F# to get up and running. So long as you are comfortable 
@@ -9,8 +9,8 @@
     syntax - you're good to go!</description>
     <item>
       <title>Hello, FsBlog!</title>
-      <guid>http://saxonmatt.co.uk/fsblog/blog/2013/11-08-hello-fsblog</guid>
-      <link>http://saxonmatt.co.uk/fsblog/blog/2013/11-08-hello-fsblog/index.html</link>
+      <guid>http://saxonmatt.co.uk/FsBlog/blog/2013/11-08-hello-fsblog</guid>
+      <link>http://saxonmatt.co.uk/FsBlog/blog/2013/11-08-hello-fsblog/index.html</link>
       <pubDate>Fri, 08 Nov 2013 11:27:31 GMT</pubDate>
       <description></description>
     </item>
