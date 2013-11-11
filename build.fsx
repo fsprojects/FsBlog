@@ -7,7 +7,7 @@ This script is intended for use with [FAKE][fake] for the build process of the
  [fake]: http://fsharp.github.io/FAKE/
 *)
 
-
+#I "packages/FAKE/tools/"
 #r "packages/FAKE/tools/FakeLib.dll"
 open Fake
 open Fake.Git
