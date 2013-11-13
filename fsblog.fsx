@@ -132,6 +132,10 @@ Target "New" (fun _ ->
     | _, _, _    -> traceError "Please specify only one argument, 'post' or 'fsx'."
 )
 
+Target "Clean" (fun _ ->
+    CleanDirs [output]
+)
+
 Target "Deploy" DoNothing
 
 Target "Commit" DoNothing

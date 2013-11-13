@@ -8,3 +8,4 @@
 * 0.3.3-beta - minor change to fix bug in default layout
 * 0.3.4-beta - fixed a bug where inline code styles were not displaying properly
 * 0.3.5-beta - changed the way in which pages and posts were templated (both use the default layout now)
+* 0.4.0-beta - added 'clean' command
