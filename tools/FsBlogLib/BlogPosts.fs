@@ -33,6 +33,10 @@ module BlogPosts =
     Regex("^\(\*\@(?<header>[^\*]*)\*\)(?<content>.*)$", RegexOptions.Singleline)
   let razorHeaderRegex = 
     Regex("^\@{(?<header>[^}]*)}(?<content>.*)$", RegexOptions.Singleline)
+  let mdAbstractRegex = 
+    Regex("(?<abstract>.*)<!--more-->", RegexOptions.Singleline)
+  let fsxAbstractRegex = 
+    Regex("(?<abstract>.*)^(^*^*^*more^*^*^*^)", RegexOptions.Singleline)
 
   /// An FSX file must start with a header (*@ ... *) which is removed 
   /// before Literate processing (and then added back as @{ ... }
@@ -47,18 +51,21 @@ module BlogPosts =
 
   /// Return the header block of any blog post file
   let GetBlogHeaderAndAbstract transformer prefix file =
-    let regex =
+    let headerRegex, abstractRegex =
       match Path.GetExtension(file).ToLower() with
-      | ".fsx" -> scriptHeaderRegex
-      | ".md" | ".html" | ".cshtml" -> razorHeaderRegex
+      | ".fsx" -> scriptHeaderRegex, fsxAbstractRegex
+      | ".md" | ".html" | ".cshtml" -> razorHeaderRegex, mdAbstractRegex
       | _ -> failwith "File format not supported!"
-    let reg = regex.Match(File.ReadAllText(file))
-    if not reg.Success then 
+    let headerMatches = headerRegex.Match(File.ReadAllText(file))
+    if not headerMatches.Success then 
       failwithf "The following source file is missing a header:\n%s" file  
 
-    // Read abstract file and transform it
-    // let abstr = transformer prefix (Path.GetDirectoryName(file) ++ "abstracts" ++ Path.GetFileName(file))
-    file, reg.Groups.["header"].Value, "" //abstr
+    let header = headerMatches.Groups.["header"].Value
+    let content = headerMatches.Groups.["content"].Value
+    let abstractMatches = abstractRegex.Match(content)
+    let abstr = abstractMatches.Groups.["abstract"].Value    
+    
+    file, header, abstr 
 
   /// Simple function that parses the header of the blog post. Everybody knows
   /// that doing this with regexes is silly, but the blog post headers are simple enough.

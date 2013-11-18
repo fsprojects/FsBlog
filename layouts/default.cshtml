@@ -34,7 +34,7 @@
         @foreach (var post in Enumerable.Take(Model.Posts, 5))
     		{
     		    <p class="view"><a href="@Model.Root/blog/@post.Url/index.html">@post.Title</a>
-    		    <small>@PostDate(post.Date)</small></p>
+    		    <small>@PostDate(post.Date)</small><br />@post.Abstract</p>
     		}
       </header>
       <section>

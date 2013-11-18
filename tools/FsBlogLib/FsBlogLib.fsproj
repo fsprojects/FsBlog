@@ -58,7 +58,6 @@
     <Compile Include="FileHelpers.fs" />
     <Compile Include="BlogPosts.fs" />
     <Compile Include="Blog.fs" />
-    <Compile Include="Calendar.fs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
