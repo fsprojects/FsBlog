@@ -12,7 +12,11 @@
       <guid>http://saxonmatt.co.uk/FsBlog/blog/2013/11-09-getting-started</guid>
       <link>http://saxonmatt.co.uk/FsBlog/blog/2013/11-09-getting-started/index.html</link>
       <pubDate>Sat, 09 Nov 2013 12:38:14 GMT</pubDate>
-      <description></description>
+      <description>
+
+If you've much experience with other static site generators like Octopress or Jekyll most of this should be fairly familiar, if not, hopefully it won't be too difficult to pick up.
+
+</description>
     </item>
     <item>
       <title>Hello, FsBlog!</title>
