@@ -6,7 +6,7 @@
     Description = "";
 }
 
-If you've much experience with other static site generators like Octopress or Jekyll most of this should be fairly familiar, if not, hopefully it won't be too difficult to pick up.
+If you've much experience with other static site generators like *Octopress* or *Jekyll* most of this should be fairly familiar, if not, hopefully it won't be too difficult to pick up.
 
 <!--more-->
 

@@ -57,7 +57,7 @@ module Blog =
             else RemoveScriptHeader ext current
           use fsx = DisposableFile.Create(current.Replace(ext, "_" + ext))
           use html = DisposableFile.CreateTemp(".html")
-          File.WriteAllText(fsx.FileName, content)
+          File.WriteAllText(fsx.FileName, content |> RemoveScriptAbstractMarker)
           if ext = ".fsx" then
             Literate.ProcessScriptFile(fsx.FileName, template, html.FileName, ?prefix=prefix)
           else
@@ -116,4 +116,3 @@ module Blog =
       if not (File.Exists(target)) || needsUpdate item then
         printfn "Generating archive: %s" (infoFunc item)
         TransformFile template true razor None blogIndex target
-

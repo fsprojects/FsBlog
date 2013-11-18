@@ -1,5 +1,6 @@
 ﻿namespace FsBlogLib
 open System.IO
+open FSharp.Literate
 
 // --------------------------------------------------------------------------------------
 // Parsing blog posts etc.
@@ -36,7 +37,7 @@ module BlogPosts =
   let mdAbstractRegex = 
     Regex("(?<abstract>.*)<!--more-->", RegexOptions.Singleline)
   let fsxAbstractRegex = 
-    Regex("(?<abstract>.*)^(^*^*^*more^*^*^*^)", RegexOptions.Singleline)
+    Regex("(?<abstract>.*)\(\*\*\* more \*\*\*\)", RegexOptions.Singleline)
 
   /// An FSX file must start with a header (*@ ... *) which is removed 
   /// before Literate processing (and then added back as @{ ... }
@@ -49,10 +50,16 @@ module BlogPosts =
     let body = reg.Groups.["content"].Value
     "@{" + header + "}\n", body
 
+  /// An FSX file uses (*** more ***) to mark the end of what will be used as
+  /// a post abstract - we must remove this before running the literate processing.
+  let RemoveScriptAbstractMarker content = 
+    (content:string).Replace("(*** more ***)", "")
+
   /// Return the header block of any blog post file
   let GetBlogHeaderAndAbstract transformer prefix file =
+    let ext = Path.GetExtension(file).ToLower()
     let headerRegex, abstractRegex =
-      match Path.GetExtension(file).ToLower() with
+      match ext with
       | ".fsx" -> scriptHeaderRegex, fsxAbstractRegex
       | ".md" | ".html" | ".cshtml" -> razorHeaderRegex, mdAbstractRegex
       | _ -> failwith "File format not supported!"
@@ -63,9 +70,18 @@ module BlogPosts =
     let header = headerMatches.Groups.["header"].Value
     let content = headerMatches.Groups.["content"].Value
     let abstractMatches = abstractRegex.Match(content)
-    let abstr = abstractMatches.Groups.["abstract"].Value    
+    let rawAbstr = abstractMatches.Groups.["abstract"].Value      
     
-    file, header, abstr 
+    use fsx = DisposableFile.Create(file.Replace(ext, "_temp_" + ext))
+    use html = DisposableFile.CreateTemp(".html")
+    File.WriteAllText(fsx.FileName, rawAbstr)
+    if ext = ".fsx" then
+        Literate.ProcessScriptFile(input=fsx.FileName, output=html.FileName)   
+    else
+        Literate.ProcessMarkdown(input=fsx.FileName, output=html.FileName)    
+    let abstr = File.ReadAllText(html.FileName)
+
+    file, header, abstr
 
   /// Simple function that parses the header of the blog post. Everybody knows
   /// that doing this with regexes is silly, but the blog post headers are simple enough.

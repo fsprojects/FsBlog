@@ -6,7 +6,11 @@
     Description = "Introducing FsBlog - a blog-aware static site generator using F#.";
 }
 
-FsBlog aims to be a blog-aware static site generator, mostly built in `F#` for .NET and Mono developers. But don't worry, you won't even need to know any F# to get up and running. So long as you are comfortable using a command line or terminal, and have a degree of familiarity with Markdown and Razor syntax - you're already most of the way there!
+**FsBlog** aims to be a blog-aware static site generator, mostly built in `F#` for .NET and Mono developers. 
+
+<!--more-->
+
+But don't worry, you won't even need to know any F# to get up and running. So long as you are comfortable using a command line or terminal, and have a degree of familiarity with Markdown and Razor syntax - you're already most of the way there!
 
 Inpired by the likes of **Jekyll** and **Octopress** - and greatly helped along the way by the scripts behind [@@tomaspetricek](https://twitter.com/tomaspetricek)'s personal website; FsBlog gives the average .NET or Mono dev the tools that they need to get a statically built website up and running quickly and hosted somewhere like [Github Pages](http://pages.github.com/).
 
