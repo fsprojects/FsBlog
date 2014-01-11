@@ -65,7 +65,7 @@ Target "Clean" (fun _ ->
 )
 
 Target "Build" (fun _ ->
-    { BaseDirectories = [__SOURCE_DIRECTORY__]
+    { BaseDirectory = __SOURCE_DIRECTORY__
       Includes = [ solution +       ".sln" ]
       Excludes = [] } 
     |> Scan
