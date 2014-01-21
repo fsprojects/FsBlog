@@ -35,7 +35,7 @@ module BlogPosts =
   let razorHeaderRegex = 
     Regex("^\@{(?<header>[^}]*)}(?<content>.*)$", RegexOptions.Singleline)
   let mdAbstractRegex = 
-    Regex("(?<abstract>.*)<!--more-->", RegexOptions.Singleline)
+    Regex("(?<abstract>.*)<!--\s?more\s?-->", RegexOptions.Singleline)
   let fsxAbstractRegex = 
     Regex("(?<abstract>.*)\(\*\*\* more \*\*\*\)", RegexOptions.Singleline)
 
