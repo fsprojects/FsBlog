@@ -4,6 +4,7 @@ open System.IO
 open RazorEngine
 open RazorEngine.Text
 open RazorEngine.Templating
+open RazorEngine.Compilation
 open RazorEngine.Configuration
 
 type Razor(layoutsRoot) =
@@ -17,6 +18,9 @@ type Razor(layoutsRoot) =
                 let layoutFile = Path.Combine(layoutsRoot, name + ".cshtml")
                 if File.Exists(layoutFile) then File.ReadAllText(layoutFile)
                 else failwithf "Could not find template file: %s\nSearching in: %s" name layoutsRoot }
+        config.CompilerServiceFactory <- 
+          { new ICompilerServiceFactory with
+              member x.CreateCompilerService(name) = new RazorEngine.Compilation.CSharp.CSharpDirectCompilerService(false, null) :> _ }
         config.BaseTemplateType <- typedefof<FsBlogLib.TemplateBaseExtensions<_>>
         config.Debug <- true        
         let templateservice = new TemplateService(config)
