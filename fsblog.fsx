@@ -106,7 +106,7 @@ Target "Preview" (fun _ ->
     let stop () = server.Value |> Option.iter (fun v -> v.Stop())
     
     let run() =
-        let url = "http://localhost:8088/" 
+        let url = "http://localhost:8080/" 
         stop ()
         server := Some(HttpServer.Start(url, output, Replacements = [root, url]))
         printfn "Starting web server at %s" url
