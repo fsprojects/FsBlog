@@ -34,6 +34,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{22965072
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsBlogLib.Tests", "tests\FsBlogLib.Tests\FsBlogLib.Tests.fsproj", "{27E210E1-D9C9-4661-9CF5-4B7EDCB3335F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{76023851-00A1-494C-8928-3E61E90258AB}"
+	ProjectSection(SolutionItems) = preProject
+		config\config.yml = config\config.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
