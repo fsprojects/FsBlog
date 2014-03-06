@@ -34,7 +34,7 @@ let root = config.url.AbsoluteUri
 let title = config.title
 let description = config.description
 let gitLocation = config.gitlocation
-
+let gitbranch = config.gitbranch
 
 let source = __SOURCE_DIRECTORY__ ++ config.source
 let blog = __SOURCE_DIRECTORY__ ++ config.blog
@@ -44,6 +44,7 @@ let content = __SOURCE_DIRECTORY__ ++ config.content
 let template = __SOURCE_DIRECTORY__ ++ config.template
 
 let output = __SOURCE_DIRECTORY__ ++ config.output
+let deploy = __SOURCE_DIRECTORY__ ++ config.deploy
 
 let tagRenames = List.empty<string*string> |> dict
 let exclude = []
@@ -144,17 +145,26 @@ Target "Deploy" DoNothing
 
 Target "Commit" DoNothing
 
-Target "Publish" (fun _ ->
-    let ghPagesLocal = output
-    CommandHelper.runSimpleGitCommand ghPagesLocal "add ." |> printfn "%s"
+Target "GitClone" (fun _ ->
+    if(FileSystemHelper.directoryExists(deploy ++ ".git")) then
+        ()
+    else
+        Repository.cloneSingleBranch __SOURCE_DIRECTORY__ gitLocation.AbsoluteUri gitbranch deploy
+)
+
+Target "GitPublish" (fun _ -> 
+    CopyRecursive output deploy true |> ignore
+    CommandHelper.runSimpleGitCommand deploy "add ." |> printfn "%s"
     let cmd = sprintf """commit -a -m "Update generated web site (%s)""" (DateTime.Now.ToString("dd MMMM yyyy"))
-    CommandHelper.runSimpleGitCommand ghPagesLocal cmd |> printfn "%s"
-    Branches.push ghPagesLocal
+    CommandHelper.runSimpleGitCommand deploy cmd |> printfn "%s"
+    Branches.push deploy
 )
 
 "Generate" ==> "Preview"
 
-"Generate" ==> "Publish"
+"Clean" ==>
+"Generate" ==>
+"GitClone" ==> "GitPublish"
 
 // --------------------------------------------------------------------------------------
 // Run a specified target.

@@ -3,7 +3,8 @@
 # ----------------------- #
 
 url: http://saxonmatt.co.uk/FsBlog
-gitlocation: https://github.com/nelak/nelak.com.ar.git
+gitlocation: https://github.com/fsprojects/FsBlog.git
+gitbranch: gh-pages
 title: FsBlog - F# static site generation
 description: >
     FsBlog aims to be a blog-aware static site generator, mostly built in F#. But don't worry, 
@@ -18,3 +19,4 @@ layouts: layouts
 content: content
 template: tools/empty-template.html
 output: output/
+deploy: deploy
