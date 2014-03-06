@@ -12,6 +12,7 @@ and tasks that operate with the static site generation.
 #r "bin/FsBlogLib/FSharp.Configuration.dll"
 
 open Fake
+open Fake.Git
 open System
 open System.IO
 open System.Text.RegularExpressions
@@ -32,6 +33,8 @@ let config = Config()
 let root = config.url.AbsoluteUri
 let title = config.title
 let description = config.description
+let gitLocation = config.gitlocation
+
 
 let source = __SOURCE_DIRECTORY__ ++ config.source
 let blog = __SOURCE_DIRECTORY__ ++ config.blog
@@ -141,7 +144,17 @@ Target "Deploy" DoNothing
 
 Target "Commit" DoNothing
 
+Target "Publish" (fun _ ->
+    let ghPagesLocal = output
+    CommandHelper.runSimpleGitCommand ghPagesLocal "add ." |> printfn "%s"
+    let cmd = sprintf """commit -a -m "Update generated web site (%s)""" (DateTime.Now.ToString("dd MMMM yyyy"))
+    CommandHelper.runSimpleGitCommand ghPagesLocal cmd |> printfn "%s"
+    Branches.push ghPagesLocal
+)
+
 "Generate" ==> "Preview"
+
+"Generate" ==> "Publish"
 
 // --------------------------------------------------------------------------------------
 // Run a specified target.
