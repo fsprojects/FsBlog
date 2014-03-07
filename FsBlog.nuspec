@@ -3,8 +3,8 @@
     <metadata>
         <id>FsBlog</id>
         <version>1.0.0-alpha</version>
-        <authors>Dave Thomas,Tomas Petricek</authors>
-        <owners>Dave Thomas,Tomas Petricek</owners>
+        <authors>Matt Ball, Dave Thomas,Tomas Petricek</authors>
+        <owners>Matt Ball, Dave Thomas,Tomas Petricek</owners>
         <projectUrl>https://github.com/fsprojects/FsBlog</projectUrl>
         <iconUrl>https://raw.github.com/fsharp/FSharp.Compiler.Service/master/misc/logo.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
