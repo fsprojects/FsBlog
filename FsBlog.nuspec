@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
         <id>FsBlog</id>
-        <version>1.0.0-alpha</version>
+        <version>1.0.1-alpha</version>
         <authors>Matt Ball, Dave Thomas,Tomas Petricek</authors>
         <owners>Matt Ball, Dave Thomas,Tomas Petricek</owners>
         <projectUrl>https://github.com/fsprojects/FsBlog</projectUrl>
