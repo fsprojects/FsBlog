@@ -9,7 +9,10 @@ and tasks that operate with the static site generation.
 #r "packages/FAKE/tools/FakeLib.dll"
 #r "bin/FsBlogLib/RazorEngine.dll"
 #r "bin/FsBlogLib/FsBlogLib.dll"
+#r "bin/FsBlogLib/FSharp.Configuration.dll"
+
 open Fake
+open Fake.Git
 open System
 open System.IO
 open System.Text.RegularExpressions
@@ -18,28 +21,30 @@ open FsBlogLib.FileHelpers
 open FsBlogLib.BlogPosts
 open FsBlogLib.Blog
 open FSharp.Http
-
+open FSharp.Configuration
 
 // --------------------------------------------------------------------------------------
 // Configuration.
 // --------------------------------------------------------------------------------------
 Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
-let root = "http://saxonmatt.co.uk/FsBlog"
-let title = "FsBlog - F# static site generation"
-let description = """
-    FsBlog aims to be a blog-aware static site generator, mostly built in F#. But don't worry, 
-    you won't even need to know any F# to get up and running. So long as you are comfortable 
-    using a command line or terminal, and have a degree of familiarity with Markdown and Razor 
-    syntax - you're good to go!"""
+type Config = YamlConfig<"config/config.yml">
 
-let source = __SOURCE_DIRECTORY__ ++ "source/"
-let blog = __SOURCE_DIRECTORY__ ++ "source/blog/"
-let blogIndex = __SOURCE_DIRECTORY__ ++ "source/blog/index.cshtml"
-let layouts = __SOURCE_DIRECTORY__ ++ "layouts"
-let content = __SOURCE_DIRECTORY__ ++ "content"
-let template = __SOURCE_DIRECTORY__ ++ "tools/empty-template.html"
+let config = Config()
+let root = config.url.AbsoluteUri
+let title = config.title
+let description = config.description
+let gitLocation = config.gitlocation
+let gitbranch = config.gitbranch
 
-let output = __SOURCE_DIRECTORY__ ++ "output/"
+let source = __SOURCE_DIRECTORY__ ++ config.source
+let blog = __SOURCE_DIRECTORY__ ++ config.blog
+let blogIndex = __SOURCE_DIRECTORY__ ++ config.blogIndex
+let layouts = __SOURCE_DIRECTORY__ ++ config.layouts
+let content = __SOURCE_DIRECTORY__ ++ config.content
+let template = __SOURCE_DIRECTORY__ ++ config.template
+
+let output = __SOURCE_DIRECTORY__ ++ config.output
+let deploy = __SOURCE_DIRECTORY__ ++ config.deploy
 
 let tagRenames = List.empty<string*string> |> dict
 let exclude = []
@@ -140,7 +145,26 @@ Target "Deploy" DoNothing
 
 Target "Commit" DoNothing
 
+Target "GitClone" (fun _ ->
+    if(FileSystemHelper.directoryExists(deploy ++ ".git")) then
+        ()
+    else
+        Repository.cloneSingleBranch __SOURCE_DIRECTORY__ gitLocation.AbsoluteUri gitbranch deploy
+)
+
+Target "GitPublish" (fun _ -> 
+    CopyRecursive output deploy true |> ignore
+    CommandHelper.runSimpleGitCommand deploy "add ." |> printfn "%s"
+    let cmd = sprintf """commit -a -m "Update generated web site (%s)""" (DateTime.Now.ToString("dd MMMM yyyy"))
+    CommandHelper.runSimpleGitCommand deploy cmd |> printfn "%s"
+    Branches.push deploy
+)
+
 "Generate" ==> "Preview"
+
+"Clean" ==>
+"Generate" ==>
+"GitClone" ==> "GitPublish"
 
 // --------------------------------------------------------------------------------------
 // Run a specified target.

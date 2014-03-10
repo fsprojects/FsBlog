@@ -36,6 +36,9 @@ let description = """
   using a command line or terminal, and have a degree of familiarity with Markdown and Razor 
   syntax - you're good to go!"""
 
+// Pattern specifying assemblies to be tested using xunit
+let testAssemblies = "bin/FsBlogLib/*Tests*.dll"
+
 let tags = "F# fsharp blog website generation"
 
 // Generate assembly info files with the right version & up-to-date information
@@ -73,6 +76,17 @@ Target "Build" (fun _ ->
     |> ignore
 )
 
+// --------------------------------------------------------------------------------------
+// Run the unit tests using test runner
+
+Target "RunTests" (fun _ ->
+    !! testAssemblies 
+    |> xUnit (fun p ->
+        { p with
+            ShadowCopy = false
+            TimeOut = TimeSpan.FromMinutes 20.
+            })
+)
 
 // --------------------------------------------------------------------------------------
 // Build dependencies.

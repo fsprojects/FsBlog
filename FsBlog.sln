@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{8E03BE4F-38F8-4701-AF77-B49950F254F5}"
 	ProjectSection(SolutionItems) = preProject
@@ -25,6 +25,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "layouts", "layouts", "{BDAF
 		layouts\post.cshtml = layouts\post.cshtml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B0B6DBA6-5906-45EE-9486-E17B63A16DEF}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{22965072-5FEA-4A09-BCF8-975E5EB7942B}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsBlogLib.Tests", "tests\FsBlogLib.Tests\FsBlogLib.Tests.fsproj", "{27E210E1-D9C9-4661-9CF5-4B7EDCB3335F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{76023851-00A1-494C-8928-3E61E90258AB}"
+	ProjectSection(SolutionItems) = preProject
+		config\config.yml = config\config.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +53,10 @@ Global
 		{9AB3650B-CC24-4404-A175-A573DA928475}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AB3650B-CC24-4404-A175-A573DA928475}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AB3650B-CC24-4404-A175-A573DA928475}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27E210E1-D9C9-4661-9CF5-4B7EDCB3335F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27E210E1-D9C9-4661-9CF5-4B7EDCB3335F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27E210E1-D9C9-4661-9CF5-4B7EDCB3335F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27E210E1-D9C9-4661-9CF5-4B7EDCB3335F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,5 +64,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B83F5E3E-8CEC-4F4E-B251-D2C853816C62} = {8E03BE4F-38F8-4701-AF77-B49950F254F5}
 		{9AB3650B-CC24-4404-A175-A573DA928475} = {8E03BE4F-38F8-4701-AF77-B49950F254F5}
+		{27E210E1-D9C9-4661-9CF5-4B7EDCB3335F} = {22965072-5FEA-4A09-BCF8-975E5EB7942B}
 	EndGlobalSection
 EndGlobal
