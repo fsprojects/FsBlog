@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+    <metadata>
+        <id>FsBlog</id>
+        <version>1.0.1-alpha</version>
+        <authors>Matt Ball, Dave Thomas,Tomas Petricek</authors>
+        <owners>Matt Ball, Dave Thomas,Tomas Petricek</owners>
+        <projectUrl>https://github.com/fsprojects/FsBlog</projectUrl>
+        <iconUrl>https://raw.github.com/fsharp/FSharp.Compiler.Service/master/misc/logo.png</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>FsBlog aims to be a blog-aware static site generator, mostly built in F# for .NET and Mono developers. But don't worry, you won't even need to know any F# to get up and running. So long as you are comfortable using a command line or terminal, and have a degree of familiarity with Markdown and Razor syntax - you're already most of the way there!
+
+Inpired by the likes of Jekyll and Octopress - and greatly helped along the way by the scripts behind @tomaspetricek's personal website; FsBlog gives the average .NET or Mono dev the tools that they need to get a statically built website up and running quickly and hosted somewhere like Github Pages.
+
+This set of tools have been pulled together using some of the following community projects:
+
+    FAKE for automation and scripting of the different tasks.
+    F# Formatting for Markdown and F# literate programming, processing and colorization.
+    RazorEngine which is used for the templating and embedded C# code.
+    Some of the code in FsBlogLib that calls the RazorEngine has been based on F# code in Tilde.
+    Github Pages for our default theme.</description>
+        <summary>Blog aware, static site generation using F#.</summary>
+        <releaseNotes>Fix symbols for named union fields in patterns</releaseNotes>
+        <copyright>Copyright 2014</copyright>
+        <tags>F# fsharp blog</tags>
+        <!--<dependencies>
+          <dependency id="FAKE" version="2.11.15-alpha" />
+        </dependencies>-->
+    </metadata>
+  <files>
+    <file src="**\*.*" exclude="**\*.suo;**\*.sln;**\build.*;**\.git*;**\.git\**\*.*;packages\**\*.*;tools\**\*.*;tests\**\*.*;deploy\**\*.*;output\**\*.*;**\bin\**\*.*;**\obj\**\*.*" target="content"/>
+    <file src="tools\empty-template.html" target="content\tools"/>
+    <file src="bin\**\*.dll" exclude="**\xunit*.dll" target="content\bin"/>
+  </files>
+</package>

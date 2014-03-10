@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{8E03BE4F-38F8-4701-AF77-B49950F254F5}"
 	ProjectSection(SolutionItems) = preProject
 		tools\packages.config = tools\packages.config
+		FsBlog.nuspec = FsBlog.nuspec
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{14C8B79A-1276-4B1C-BE97-4ED715860DE8}"
