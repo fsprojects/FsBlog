@@ -45,7 +45,9 @@ type HttpServer private (url, root) =
   let mutable replacements : (string * string) list = []
   let contentTypes = 
     dict [ ".css", "text/css"; ".html", "text/html"; ".js", "text/javascript";
-           ".png", "image/png"; ".jpg", "image/jpg"; ".gif", "image/gif" ]
+           ".png", "image/png"; ".jpg", "image/jpg"; ".gif", "image/gif"; 
+           ".woff", "application/font-woff" ; ".eot", "application/vnd.ms-fontobject";
+           ".svg", "image/svg+xml"; ".svg", "image/svg+xml"; ".ttf", "application/x-font-ttf"]
   let tokenSource = new CancellationTokenSource()
   let agent = MailboxProcessor<HttpListenerContext>.Start((fun inbox -> async { 
     while true do
