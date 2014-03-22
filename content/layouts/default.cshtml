@@ -1,0 +1,52 @@
+﻿@using System.Linq
+@helper PostDate(DateTime rawDate) {
+    <time datetime="@rawDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss")" pubdate data-updated="true">@rawDate.ToString("MMM d, yyyy")</time>
+}
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>FsBlog</title>
+    <link rel="stylesheet" href="@Model.Root/stylesheets/styles.css">
+    <link rel="stylesheet" href="@Model.Root/stylesheets/pygment_trac.css">
+    <link rel="shortcut icon" href="@Model.Root/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!-- FSharp.Formatting Styles --> 
+  	<link rel="stylesheet" type="text/css" media="screen" href="@Model.Root/fsharp.formatting/tooltips.css" /> 
+  	<script type="text/javascript" src="@Model.Root/fsharp.formatting/tooltips.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  <body>
+  	<div class="wrapper">
+	  <header>
+	  	  <a href="@Model.Root/index.html" class="falseheader">FsBlog</a>
+        <p>Blog aware, static site generation using F#.</p>
+        
+        <p class="view"><a href="https://github.com/saxonmatt/FsBlog">View the Project on GitHub</a></p>
+        <ul>
+          <li><a href="https://github.com/saxonmatt/FsBlog">View On <strong>GitHub</strong></a></li>
+          <li><a href="https://github.com/saxonmatt/FsBlog/issues">Report a <strong>Bug</strong></a></li>
+          <li><a href="https://github.com/saxonmatt/FsBlog/issues/milestones">Check <strong>Progress</strong></a></li>
+        </ul>
+        <h2>Recent posts</h2>
+        @foreach (var post in Enumerable.Take(Model.Posts, 5))
+    		{
+    		    <h3 class="h2link"><a href="@Model.Root/blog/@post.Url/index.html">@post.Title</a></h3>
+    		    <p class="view"><small>@PostDate(post.Date)</small><br />@post.Abstract</p>
+    		}
+      </header>
+      <section>
+		    @RenderBody()
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://twitter.com/mattdrivendev">MattDrivenDev</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+  	</div>
+    <script src="@Model.Root/javascripts/scale.fix.js"></script>
+  </body>
+</html>

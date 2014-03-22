@@ -2,7 +2,7 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://saxonmatt.co.uk/FsBlog
+url: http://localhost:8080/FsBlog
 gitlocation: https://github.com/fsprojects/FsBlog.git
 gitbranch: gh-pages
 title: FsBlog - F# static site generation
@@ -20,3 +20,4 @@ content: content
 template: tools/empty-template.html
 output: output/
 deploy: deploy
+themes: themes
