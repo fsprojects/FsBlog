@@ -39,8 +39,9 @@ let gitbranch = config.gitbranch
 let source = __SOURCE_DIRECTORY__ ++ config.source
 let blog = __SOURCE_DIRECTORY__ ++ config.blog
 let blogIndex = __SOURCE_DIRECTORY__ ++ config.blogIndex
-let layouts = __SOURCE_DIRECTORY__ ++ config.layouts
+let themes = __SOURCE_DIRECTORY__ ++ config.themes
 let content = __SOURCE_DIRECTORY__ ++ config.content
+let layouts = content ++ config.layouts
 let template = __SOURCE_DIRECTORY__ ++ config.template
 
 let output = __SOURCE_DIRECTORY__ ++ config.output
@@ -49,12 +50,11 @@ let deploy = __SOURCE_DIRECTORY__ ++ config.deploy
 let tagRenames = List.empty<string*string> |> dict
 let exclude = []
 let references = []
-let dependencies = [ yield! Directory.GetFiles(layouts) ] 
+
 let special =
     [ source ++ "index.cshtml"
       source ++ "blog" ++ "index.cshtml" ]
 let rsscount = 20
-
 
 // --------------------------------------------------------------------------------------
 // Static site tooling as a set of targets.
@@ -64,6 +64,7 @@ let rsscount = 20
 Target "Generate" (fun _ ->
 
     let buildSite (updateTagArchive) =
+        let dependencies = [ yield! Directory.GetFiles(layouts) ] 
         let noModel = { Model.Root = root; MonthlyPosts = [||]; Posts = [||]; TaglyPosts = [||]; GenerateAll = true }
         let razor = FsBlogLib.Razor(layouts, Model = noModel)
         let model = LoadModel(tagRenames, TransformAsTemp (template, source) razor, root, blog)
@@ -145,6 +146,8 @@ Target "Deploy" DoNothing
 
 Target "Commit" DoNothing
 
+Target "DoNothing" DoNothing
+
 Target "GitClone" (fun _ ->
     if(FileSystemHelper.directoryExists(deploy ++ ".git")) then
         ()
@@ -160,6 +163,19 @@ Target "GitPublish" (fun _ ->
     Branches.push deploy
 )
 
+Target "Install" (fun _ -> 
+    let theme = getBuildParam "theme"
+
+    match theme with
+    | "" -> traceError "Please specify theme"
+    | _ -> 
+           CleanDir content
+           CopyDir content (themes ++ theme) (fun file -> not(file.StartsWith(themes ++ theme ++ "source"))) |> ignore
+           CopyRecursive (themes ++ theme ++ "source") source true |> ignore
+)
+
+"DoNothing" =?> 
+("Install", hasBuildParam "theme")  ==>
 "Generate" ==> "Preview"
 
 "Clean" ==>
