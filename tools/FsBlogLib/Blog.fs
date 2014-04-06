@@ -12,6 +12,7 @@ open FSharp.Literate
 // --------------------------------------------------------------------------------------
 
 module Blog = 
+  open System.Text.RegularExpressions
 
   /// Represents the model that is passed to all pages
   type Model = 
@@ -48,6 +49,8 @@ module Blog =
         |> Array.ofSeq
       Root = root.Replace('\\', '/') }
 
+  let nonFSharpLangRegex = Regex("lang=\"(\w*)\"", RegexOptions.None)
+
   let TransformFile template hasHeader (razor:FsBlogLib.Razor) prefix current target =     
     let html =
       match Path.GetExtension(current).ToLower() with
@@ -69,8 +72,12 @@ module Blog =
       | ".html" | ".cshtml" ->
           razor.ProcessFile(current)
       | _ -> failwith "Not supported file!"
-    // Add syntax highlighting to non-F# source code    
-    let formatted = CSharpFormat.SyntaxHighlighter.FormatHtml(html)
+    // Add syntax highlighting to non-F# source code          
+    let formatted = 
+        let codeMatch = nonFSharpLangRegex.Match(html)
+        if codeMatch.Success then
+            html.Replace(codeMatch.Value, "class=\"" + codeMatch.Groups.[1].Value + "code\"")
+        else html
     File.WriteAllText(target, formatted)
 
   let TransformAsTemp (template, source:string) razor prefix current = 
