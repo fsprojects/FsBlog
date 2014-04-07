@@ -5,8 +5,8 @@ VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{8E03BE4F-38F8-4701-AF77-B49950F254F5}"
 	ProjectSection(SolutionItems) = preProject
-		tools\packages.config = tools\packages.config
 		FsBlog.nuspec = FsBlog.nuspec
+		tools\packages.config = tools\packages.config
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{14C8B79A-1276-4B1C-BE97-4ED715860DE8}"
@@ -16,8 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{14C8
 	EndProjectSection
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsBlogLib", "tools\FsBlogLib\FsBlogLib.fsproj", "{B83F5E3E-8CEC-4F4E-B251-D2C853816C62}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpFormat", "tools\CSharpFormat\CSharpFormat.csproj", "{9AB3650B-CC24-4404-A175-A573DA928475}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "layouts", "layouts", "{BDAF64FC-970C-4227-8BB0-878E6AA012E4}"
 	ProjectSection(SolutionItems) = preProject
@@ -50,10 +48,6 @@ Global
 		{B83F5E3E-8CEC-4F4E-B251-D2C853816C62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B83F5E3E-8CEC-4F4E-B251-D2C853816C62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B83F5E3E-8CEC-4F4E-B251-D2C853816C62}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9AB3650B-CC24-4404-A175-A573DA928475}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9AB3650B-CC24-4404-A175-A573DA928475}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9AB3650B-CC24-4404-A175-A573DA928475}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9AB3650B-CC24-4404-A175-A573DA928475}.Release|Any CPU.Build.0 = Release|Any CPU
 		{27E210E1-D9C9-4661-9CF5-4B7EDCB3335F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{27E210E1-D9C9-4661-9CF5-4B7EDCB3335F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27E210E1-D9C9-4661-9CF5-4B7EDCB3335F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -64,7 +58,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B83F5E3E-8CEC-4F4E-B251-D2C853816C62} = {8E03BE4F-38F8-4701-AF77-B49950F254F5}
-		{9AB3650B-CC24-4404-A175-A573DA928475} = {8E03BE4F-38F8-4701-AF77-B49950F254F5}
 		{27E210E1-D9C9-4661-9CF5-4B7EDCB3335F} = {22965072-5FEA-4A09-BCF8-975E5EB7942B}
 	EndGlobalSection
 EndGlobal

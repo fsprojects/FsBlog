@@ -69,9 +69,7 @@ module Blog =
       | ".html" | ".cshtml" ->
           razor.ProcessFile(current)
       | _ -> failwith "Not supported file!"
-    // Add syntax highlighting to non-F# source code    
-    let formatted = CSharpFormat.SyntaxHighlighter.FormatHtml(html)
-    File.WriteAllText(target, formatted)
+    File.WriteAllText(target, html)
 
   let TransformAsTemp (template, source:string) razor prefix current = 
     let cached = (Path.GetDirectoryName(current) ++ "cached" ++ Path.GetFileName(current))
