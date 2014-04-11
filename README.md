@@ -50,14 +50,6 @@ Will create a new *blank* Markdown file in your blog's source files ready for yo
 
 Will create a new *blank* `.fsx` file in your blog's source files ready for you to hack away at your next code-heavy blog post. To find out more about using `.fsx` files as the source of your posts, check out [F# Formatting: Literate programming](http://tpetricek.github.io/FSharp.Formatting/demo.html).
 
-    fake deploy
-
-When you're happy with your work you can publish your website with a deploy task.
-
-    fake commit
-
-...and don't forget to commit your source files as well!
-
 ## Remarks
 
 Note: the documentation above is currently little more than a specification for the command line tooling. It is currently subject to change.
