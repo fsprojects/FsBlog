@@ -38,7 +38,7 @@ Generates the site and then starts up a local web server and launches the output
 
 But `preview` is also the *default* behaviour when you run the `fake` command without any arguments - so that makes it even easier.
 
-	fake new page="about fsblog"
+    fake new page="about fsblog"
 
 Will create a new *blank* Markdown file in your blog's source files ready for you to author a non-post page of content.
 
@@ -46,9 +46,30 @@ Will create a new *blank* Markdown file in your blog's source files ready for yo
 
 Will create a new *blank* Markdown file in your blog's source files ready for you to hack away at your next blog post.
 
-	fake new fsx="hello fsharp"
+    fake new fsx="hello fsharp"
 
 Will create a new *blank* `.fsx` file in your blog's source files ready for you to hack away at your next code-heavy blog post. To find out more about using `.fsx` files as the source of your posts, check out [F# Formatting: Literate programming](http://tpetricek.github.io/FSharp.Formatting/demo.html).
+    
+    fake clean
+
+Will remove all files from the output folder
+
+## Theming
+
+FsBlog supports theming. New theme can be installed by running:
+
+    fake install theme="theme-name"
+
+Once the new theme is installed, FsBlog will use the theme to generate the entire site. Themes are located in `themes` folder. Please see the `default` theme for the sample.
+
+## Config.yml
+
+The `config.yml` is a [YAML](http://yaml.org/) file that contains configuration settings used by FsBlog. You can specify the following settings:
+* `source` : a root folder that contains main razor (index.cshtml) and Markdown (*.md) files to be processed when `fake generate` is run.
+* `blog` : a folder that contains razor (*.cshtml) and Markdown (*.md) files to be processed as blog posts.
+* `content` : a folder contains files for an active theme.
+* `output` : a folder contains generated static website.
+* `themes` : a folder contains FsBlog themes.
 
 ## Remarks
 
