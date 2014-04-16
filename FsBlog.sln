@@ -17,13 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{14C8
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsBlogLib", "tools\FsBlogLib\FsBlogLib.fsproj", "{B83F5E3E-8CEC-4F4E-B251-D2C853816C62}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "layouts", "layouts", "{BDAF64FC-970C-4227-8BB0-878E6AA012E4}"
-	ProjectSection(SolutionItems) = preProject
-		layouts\default.cshtml = layouts\default.cshtml
-		layouts\page.cshtml = layouts\page.cshtml
-		layouts\post.cshtml = layouts\post.cshtml
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B0B6DBA6-5906-45EE-9486-E17B63A16DEF}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\packages.config = .nuget\packages.config
