@@ -24,6 +24,7 @@ build/
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
+tests/source/
 
 *_i.c
 *_p.c

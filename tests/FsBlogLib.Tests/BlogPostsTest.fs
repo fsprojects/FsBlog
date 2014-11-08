@@ -12,6 +12,6 @@ let ``Create blog post`` () =
     let path = __SOURCE_DIRECTORY__ ++ "..\\source\\blog"
     let title = "FsharpTest"
     let dateFormat = DateTime.Now
-    let expectedPath = path ++ dateFormat.Year.ToString() ++ sprintf "%02i-%02i-%s" dateFormat.Day dateFormat.Month "fsharptest.md"
+    let expectedPath = path ++ dateFormat.Year.ToString() ++ sprintf "%02i-%02i-%s" dateFormat.Month dateFormat.Day "fsharptest.md"
     CreateMarkdownPost path title
     Assert.True(File.Exists(expectedPath))
