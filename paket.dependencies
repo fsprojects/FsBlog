@@ -5,3 +5,4 @@ nuget FSharp.Formatting !~> 2.4.0
 nuget FsUnit.xUnit
 nuget xunit.runners
 nuget NuGet.CommandLine
+nuget FAKE

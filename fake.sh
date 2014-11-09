@@ -2,10 +2,12 @@
 if test "$OS" = "Windows_NT"
 then
   # use .Net
-  [ ! -f packages/FAKE/tools/FAKE.exe ] && .nuget/NuGet.exe install FAKE -OutputDirectory packages -ExcludeVersion -Prerelease
+  [ ! -f .paket/paket.exe ] && .paket/paket.bootstrapper.exe
+  .paket/paket.exe restore
   packages/FAKE/tools/FAKE.exe fsblog.fsx $@
 else
   # use mono
-  [ ! -f packages/FAKE/tools/FAKE.exe ] && mono --runtime=v4.0 .nuget/NuGet.exe install FAKE -OutputDirectory packages -ExcludeVersion -Prerelease
+  [ ! -f .paket/paket.exe ] && mono --runtime=v4.0 .paket/paket.bootstrapper.exe
+  mono --runtime=v4.0 .paket/paket.exe restore
   mono --runtime=v4.0 packages/FAKE/tools/FAKE.exe $@ --fsiargs -d:MONO fsblog.fsx
 fi

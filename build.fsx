@@ -57,11 +57,6 @@ Target "AssemblyInfo" (fun _ ->
 // --------------------------------------------------------------------------------------
 // Tasks for running the build of tools.
 // --------------------------------------------------------------------------------------
-Target "RestorePackages" (fun _ ->
-    !! "./**/packages.config" 
-    |> Seq.iter (RestorePackage (fun p -> { p with ToolPath = "./.nuget/nuget.exe" }))
-)
-
 
 Target "Clean" (fun _ ->
     CleanDirs ["bin"]
@@ -93,7 +88,6 @@ Target "RunTests" (fun _ ->
 // --------------------------------------------------------------------------------------
 "Clean"
     ==> "AssemblyInfo"
-    ==> "RestorePackages"
     ==> "Build"
 
 RunTargetOrDefault "Build"
