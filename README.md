@@ -18,7 +18,7 @@ This set of tools have been pulled together using some of the following communit
 
 You can just grab the **NuGet** package and jump straight on to **Usage** below.
 
-Alternatively you can fork or clone the [FsBlog repo](https://github.com/saxonmatt/FsBlog), then run:
+Alternatively you can fork or clone the [FsBlog repo](https://github.com/fsprojects/FsBlog), then run:
 
     build
 
