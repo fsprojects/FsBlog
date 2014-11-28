@@ -76,3 +76,13 @@ The `config.yml` is a [YAML](http://yaml.org/) file that contains configuration 
 Note: the documentation above is currently little more than a specification for the command line tooling. It is currently subject to change.
 
 This project is at a very early stage - so bare with me.
+
+
+## Maintainer(s)
+
+- [@MattDrivenDev](https://github.com/MattDrivenDev)
+- [@nelak](https://github.com/nelak)
+- [@cdrnet](https://github.com/cdrnet)
+- [@tpetricek](https://github.com/tpetricek)
+
+The default maintainer account for projects under "fsprojects" is [@fsgit](https://github.com/fsgit) - F# Community Project Incubation Space (repo management)
