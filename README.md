@@ -1,4 +1,7 @@
-# FsBlog
+[![Issue Stats](http://issuestats.com/github/fsprojects/FsBlog/badge/issue)](http://issuestats.com/github/fsprojects/FsBlog)
+[![Issue Stats](http://issuestats.com/github/fsprojects/FsBlog/badge/pr)](http://issuestats.com/github/fsprojects/FsBlog)
+
+# FsBlog [![NuGet Status](http://img.shields.io/nuget/v/FsBlog.svg?style=flat)](https://www.nuget.org/packages/FsBlog/)
 
 **Progress:** See the Issues and Milestones pages of this repo.
 
