@@ -18,4 +18,3 @@ NUGET
       Microsoft.AspNet.Razor (>= 2.0.30506.0)
     xunit (1.9.2)
     xunit.runners (1.9.2)
-    Paket (0.26.5)
