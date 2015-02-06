@@ -6,3 +6,4 @@ nuget FsUnit.xUnit
 nuget xunit.runners
 nuget NuGet.CommandLine
 nuget FAKE
+nuget paket

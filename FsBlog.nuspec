@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
         <id>FsBlog</id>
-        <version>1.0.1-alpha</version>
+        <version>1.0.2-alpha</version>
         <authors>Matt Ball, Dave Thomas,Tomas Petricek</authors>
         <owners>Matt Ball, Dave Thomas,Tomas Petricek</owners>
         <projectUrl>https://github.com/fsprojects/FsBlog</projectUrl>
@@ -28,6 +28,7 @@ This set of tools have been pulled together using some of the following communit
         </dependencies>-->
     </metadata>
   <files>
+    <file src="packages\Paket\tools\paket.exe" target="content\.paket"/>
     <file src="**\*.*" exclude="**\*.suo;**\*.sln;**\build.*;**\.git*;**\.git\**\*.*;packages\**\*.*;tools\**\*.*;tests\**\*.*;deploy\**\*.*;output\**\*.*;**\bin\**\*.*;**\obj\**\*.*" target="content"/>
     <file src="tools\empty-template.html" target="content\tools"/>
     <file src="bin\**\*.dll" exclude="**\xunit*.dll" target="content\bin"/>
