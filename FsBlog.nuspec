@@ -30,7 +30,7 @@ This set of tools have been pulled together using some of the following communit
   <files>
     <file src="**\*.*" exclude="**\*.suo;**\*.sln;**\build.*;**\.git*;**\.git\**\*.*;packages\**\*.*;tools\**\*.*;tests\**\*.*;deploy\**\*.*;output\**\*.*;**\bin\**\*.*;**\obj\**\*.*" target="content"/>
     <file src="tools\empty-template.html" target="content\tools"/>
-    <file src="tools\paket.bootstrapper.exe;tools\paket.targets" target="content\.paket"/>
+    <file src="tools\paket\paket.bootstrapper.exe;tools\paket\paket.targets" target="content\.paket"/>
     <file src="bin\**\*.dll" exclude="**\xunit*.dll" target="content\bin"/>
   </files>
 </package>
