@@ -19,10 +19,11 @@ module Blog =
       MonthlyPosts : (int * string * seq<BlogHeader>)[]
       TaglyPosts : (string * string * seq<BlogHeader>)[]
       GenerateAll : bool
-      Root : string }
+      Root : string
+      BlogTitle : string }
 
   /// Walks over all blog post files and loads model (caches abstracts along the way)
-  let LoadModel(tagRenames, transformer, (root:string), blog) = 
+  let LoadModel(tagRenames, transformer, (root:string), blog, title) = 
     let urlFriendly (s:string) = s.Replace("#", "sharp").Replace(" ", "-").Replace(".", "dot")
     let posts = LoadBlogPosts tagRenames transformer blog
     let uk = System.Globalization.CultureInfo.GetCultureInfo("en-GB")
@@ -46,7 +47,8 @@ module Blog =
                 sortByDescending (year, month)
                 select (year, uk.DateTimeFormat.GetMonthName(month), g :> seq<_>) }
         |> Array.ofSeq
-      Root = root.Replace('\\', '/') }
+      Root = root.Replace('\\', '/')
+      BlogTitle = title }
 
   let TransformFile template hasHeader (razor:FsBlogLib.Razor) prefix current target =     
     let html =

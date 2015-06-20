@@ -65,9 +65,9 @@ Target "Generate" (fun _ ->
 
     let buildSite (updateTagArchive) =
         let dependencies = [ yield! Directory.GetFiles(layouts) ] 
-        let noModel = { Model.Root = root; MonthlyPosts = [||]; Posts = [||]; TaglyPosts = [||]; GenerateAll = true }
+        let noModel = { Model.Root = root; BlogTitle = title; MonthlyPosts = [||]; Posts = [||]; TaglyPosts = [||]; GenerateAll = true }
         let razor = FsBlogLib.Razor(layouts, Model = noModel)
-        let model = LoadModel(tagRenames, TransformAsTemp (template, source) razor, root, blog)
+        let model = LoadModel(tagRenames, TransformAsTemp (template, source) razor, root, blog, title)
 
         // Generate RSS feed
         GenerateRss root title description model rsscount (output ++ "rss.xml")
