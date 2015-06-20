@@ -20,15 +20,15 @@
 <body class="@ViewBag.BodyClass nav-closed">
 
     <div class="nav">
-        <h3 class="nav-title">Menu</h3>
+        @*<h3 class="nav-title">Menu</h3>
         <a href="#" class="nav-close">
             <span class="hidden">Close</span>
         </a>
         <ul>
-            @*{{#foreach navigation}}
+            {{#foreach navigation}}
                 <li class="nav-{{slug}}{{#if current}} nav-current{{/if}}" role="presentation"><a href="{{url absolute="true"}}">{{label}}</a></li>
-            {{/foreach}}*@
-        </ul>
+            {{/foreach}}
+        </ul>*@
         <a class="subscribe-button icon-feed" href="@Model.Root/rss.xml">Subscribe</a>
     </div>
     <span class="nav-cover"></span>
@@ -39,7 +39,7 @@
 
         <footer class="site-footer clearfix">
             <section class="copyright"><a href="@Model.Root">@Model.BlogTitle</a> &copy; @DateTime.Now.Year</section>
-            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+            <section class="poweredby">Proudly published with <a href="https://github.com/fsprojects/FsBlog">FsBlog</a></section>
         </footer>
 
     </div>
