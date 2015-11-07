@@ -25,6 +25,9 @@ Alternatively you can fork or clone the [FsBlog repo](https://github.com/fsproje
 
     build
 
+1. On Windows, use the *32-bit* Visual Studio Command Prompt, the 64-bit
+   solution is not defined.
+
 This will build the tools required for usage below.
 
 ## Usage
