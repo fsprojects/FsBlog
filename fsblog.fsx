@@ -109,9 +109,16 @@ Target "Preview" (fun _ ->
     let server : ref<option<HttpServer>> = ref None
     
     let stop () = server.Value |> Option.iter (fun v -> v.Stop())
-    
+    let rec findPort port =
+        let portIsTaken =
+            System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpListeners()
+            |> Seq.exists (fun x -> x.Port = port)
+
+        if portIsTaken then findPort (port + 1) else port
+
     let run() =
-        let url = "http://localhost:8080/" 
+        let port = findPort 8080
+        let url = sprintf "http://localhost:%d/" port
         stop ()
         server := Some(HttpServer.Start(url, output, Replacements = [root, url]))
         printfn "Starting web server at %s" url
