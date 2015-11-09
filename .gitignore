@@ -26,6 +26,9 @@ build/
 [Bb]uild[Ll]og.*
 tests/source/
 
+# FAKE temp dir
+.fake/
+
 *_i.c
 *_p.c
 *.ilk

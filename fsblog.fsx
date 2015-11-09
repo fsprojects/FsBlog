@@ -5,23 +5,42 @@ This script is the main workhorse of FsBlog that just coordinates the commands
 and tasks that operate with the static site generation.
 *)
 
-#I "packages/FAKE/tools/"
-#r "packages/FAKE/tools/FakeLib.dll"
-#r "bin/FsBlogLib/RazorEngine.dll"
-#r "bin/FsBlogLib/FsBlogLib.dll"
-#r "bin/FsBlogLib/FSharp.Configuration.dll"
+#I @"packages/FAKE/tools/"
+#I @"packages/FSharp.Configuration/lib/net40"
+#I @"packages/RazorEngine/lib/net40"
+#I @"packages/Suave/lib/net40"
+#I @"bin/FsBlogLib"
+
+#r "FakeLib.dll"
+#r "RazorEngine.dll"
+#r "FsBlogLib.dll"
+#r "FSharp.Configuration.dll"
+#r "suave.dll"
 
 open Fake
 open Fake.Git
 open System
 open System.IO
+open System.Net
+open System.Diagnostics
 open System.Text.RegularExpressions
+open System.Threading
 open RazorEngine
 open FsBlogLib.FileHelpers
 open FsBlogLib.BlogPosts
 open FsBlogLib.Blog
-open FSharp.Http
 open FSharp.Configuration
+open Suave
+open Suave.Web
+open Suave.Http
+open Suave.Http.Files
+open Suave.Sockets
+open Suave.Sockets.Control
+open Suave.Sockets.AsyncSocket
+open Suave.WebSocket
+open Suave.Utils
+open Suave.Types
+
 
 // --------------------------------------------------------------------------------------
 // Configuration.
@@ -57,78 +76,115 @@ let special =
 let rsscount = 20
 
 // --------------------------------------------------------------------------------------
+// Regenerates the site
+// --------------------------------------------------------------------------------------
+
+let buildSite (updateTagArchive) =
+    let dependencies = [ yield! Directory.GetFiles(layouts) ] 
+    let noModel = { Model.Root = root; MonthlyPosts = [||]; Posts = [||]; TaglyPosts = [||]; GenerateAll = true }
+    let razor = FsBlogLib.Razor(layouts, Model = noModel)
+    let model = LoadModel(tagRenames, TransformAsTemp (template, source) razor, root, blog)
+
+    // Generate RSS feed
+    GenerateRss root title description model rsscount (output ++ "rss.xml")
+
+    let uk = System.Globalization.CultureInfo.GetCultureInfo("en-GB")
+    GeneratePostListing 
+        layouts template blogIndex model model.MonthlyPosts 
+        (fun (y, m, _) -> output ++ "blog" ++ "archive" ++ (m.ToLower() + "-" + (string y)) ++ "index.html")
+        (fun (y, m, _) -> y = DateTime.Now.Year && m = uk.DateTimeFormat.GetMonthName(DateTime.Now.Month))
+        (fun (y, m, _) -> sprintf "%d %s" y m)
+        (fun (_, _, p) -> p)
+
+    if updateTagArchive then
+        GeneratePostListing 
+            layouts template blogIndex model model.TaglyPosts
+            (fun (_, u, _) -> output ++ "blog" ++ "tag" ++ u ++ "index.html")
+            (fun (_, _, _) -> true)
+            (fun (t, _, _) -> t)
+            (fun (_, _, p) -> p)
+
+    let filesToProcess = 
+        GetSourceFiles source output
+        |> SkipExcludedFiles exclude
+        |> TransformOutputFiles output
+        |> FilterChangedFiles dependencies special
+    
+    let razor = FsBlogLib.Razor(layouts, Model = model)
+    for current, target in filesToProcess do
+        EnsureDirectory(Path.GetDirectoryName(target))
+        printfn "Processing file: %s" (current.Substring(source.Length))
+        TransformFile template true razor None current target
+
+    CopyFiles content output 
+
+// --------------------------------------------------------------------------------------
+// Webserver stuff
+// --------------------------------------------------------------------------------------
+
+let refreshEvent = new Event<_>()
+
+let handleWatcherEvents (events:FileChange seq) =
+    for e in events do
+        let fi = fileInfo e.FullPath
+        traceImportant <| sprintf "%s was changed." fi.Name
+        match fi.Attributes.HasFlag FileAttributes.Hidden || fi.Attributes.HasFlag FileAttributes.Directory with
+        | true -> ()
+        | _ ->  buildSite (false) // TODO optimize based on which file has changed
+    refreshEvent.Trigger()
+
+let socketHandler (webSocket : WebSocket) =
+  fun cx -> socket {
+    while true do
+      let! refreshed =
+        Control.Async.AwaitEvent(refreshEvent.Publish)
+        |> Suave.Sockets.SocketOp.ofAsync 
+      do! webSocket.send Text (UTF8.bytes "refreshed") true
+  }
+
+let startWebServer () =
+    printfn "starting webserver: %s" (FullName output)
+    let serverConfig = 
+        { defaultConfig with
+           homeFolder = Some (FullName output)
+           bindings = [HttpBinding.mk HTTP IPAddress.Loopback 8080us]
+        }
+    let app =
+      choose [
+        Applicatives.path "/websocket" >>= handShake socketHandler
+        Writers.setHeader "Cache-Control" "no-cache, no-store, must-revalidate"
+        >>= Writers.setHeader "Pragma" "no-cache"
+        >>= Writers.setHeader "Expires" "0"
+        >>= browseHome ]
+    startWebServerAsync serverConfig app |> snd |> Async.Start
+    Process.Start "http://localhost:8080/index.html" |> ignore
+
+// --------------------------------------------------------------------------------------
 // Static site tooling as a set of targets.
 // --------------------------------------------------------------------------------------
 
 /// Regenerates the entire static website from source files (markdown and fsx).
 Target "Generate" (fun _ ->
 
-    let buildSite (updateTagArchive) =
-        let dependencies = [ yield! Directory.GetFiles(layouts) ] 
-        let noModel = { Model.Root = root; MonthlyPosts = [||]; Posts = [||]; TaglyPosts = [||]; GenerateAll = true }
-        let razor = FsBlogLib.Razor(layouts, Model = noModel)
-        let model = LoadModel(tagRenames, TransformAsTemp (template, source) razor, root, blog)
-
-        // Generate RSS feed
-        GenerateRss root title description model rsscount (output ++ "rss.xml")
-
-        let uk = System.Globalization.CultureInfo.GetCultureInfo("en-GB")
-        GeneratePostListing 
-            layouts template blogIndex model model.MonthlyPosts 
-            (fun (y, m, _) -> output ++ "blog" ++ "archive" ++ (m.ToLower() + "-" + (string y)) ++ "index.html")
-            (fun (y, m, _) -> y = DateTime.Now.Year && m = uk.DateTimeFormat.GetMonthName(DateTime.Now.Month))
-            (fun (y, m, _) -> sprintf "%d %s" y m)
-            (fun (_, _, p) -> p)
-
-        if updateTagArchive then
-            GeneratePostListing 
-                layouts template blogIndex model model.TaglyPosts
-                (fun (_, u, _) -> output ++ "blog" ++ "tag" ++ u ++ "index.html")
-                (fun (_, _, _) -> true)
-                (fun (t, _, _) -> t)
-                (fun (_, _, p) -> p)
-
-        let filesToProcess = 
-            GetSourceFiles source output
-            |> SkipExcludedFiles exclude
-            |> TransformOutputFiles output
-            |> FilterChangedFiles dependencies special
-    
-        let razor = FsBlogLib.Razor(layouts, Model = model)
-        for current, target in filesToProcess do
-            EnsureDirectory(Path.GetDirectoryName(target))
-            printfn "Processing file: %s" (current.Substring(source.Length))
-            TransformFile template true razor None current target
-
-        CopyFiles content output 
-
     buildSite (true)
 )
 
 Target "Preview" (fun _ ->
-    let server : ref<option<HttpServer>> = ref None
+    use watcherDynamic = !! (source + "**/*.*") |> WatchChanges (fun changes ->
+        printfn "Dynamic: %A" changes
+        handleWatcherEvents changes
+    )
     
-    let stop () = server.Value |> Option.iter (fun v -> v.Stop())
-    let rec findPort port =
-        let portIsTaken =
-            System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpListeners()
-            |> Seq.exists (fun x -> x.Port = port)
+    use watcherStatic = !! (content + "/**/*.*") |> WatchChanges (fun changes ->
+        printfn "Static: %A" changes
+        handleWatcherEvents changes
+    )
 
-        if portIsTaken then findPort (port + 1) else port
-
-    let run() =
-        let port = findPort 8080
-        let url = sprintf "http://localhost:%d/" port
-        stop ()
-        server := Some(HttpServer.Start(url, output, Replacements = [root, url]))
-        printfn "Starting web server at %s" url
-        System.Diagnostics.Process.Start(url) |> ignore
-        
-    run ()
+    startWebServer ()
 
     traceImportant "Press Ctrl+C to stop!"
     // wat!?    
-    while true do ()
+    Thread.Sleep(-1)
 )
 
 Target "New" (fun _ ->       
