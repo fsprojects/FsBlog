@@ -66,7 +66,6 @@ Target "Build" (fun _ ->
     { BaseDirectory = __SOURCE_DIRECTORY__
       Includes = [ solution +       ".sln" ]
       Excludes = [] } 
-    |> Scan
     |> MSBuildRelease "bin/FsBlogLib" "Rebuild"
     |> ignore
 )

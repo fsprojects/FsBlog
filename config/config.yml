@@ -2,7 +2,7 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://localhost:8080/FsBlog
+url: http://localhost:8080
 gitlocation: https://github.com/fsprojects/FsBlog.git
 gitbranch: gh-pages
 title: FsBlog - F# static site generation
