@@ -1,17 +1,14 @@
 <rss version="2.0">
   <channel>
     <title>FsBlog - F# static site generation</title>
-    <link>http://saxonmatt.co.uk/FsBlog</link>
-    <description>
-    FsBlog aims to be a blog-aware static site generator, mostly built in F#. But don't worry, 
-    you won't even need to know any F# to get up and running. So long as you are comfortable 
-    using a command line or terminal, and have a degree of familiarity with Markdown and Razor 
-    syntax - you're good to go!</description>
+    <link>http://fsprojects.github.io/FsBlog</link>
+    <description>FsBlog aims to be a blog-aware static site generator, mostly built in F#. But don't worry,  you won't even need to know any F# to get up and running. So long as you are comfortable  using a command line or terminal, and have a degree of familiarity with Markdown and Razor  syntax - you're good to go!
+</description>
     <item>
       <title>Getting Started</title>
-      <guid>http://saxonmatt.co.uk/FsBlog/blog/2013/11-09-getting-started</guid>
-      <link>http://saxonmatt.co.uk/FsBlog/blog/2013/11-09-getting-started/index.html</link>
-      <pubDate>Sat, 09 Nov 2013 12:38:14 GMT</pubDate>
+      <guid>http://fsprojects.github.io/FsBlog/blog/2013/11-09-getting-started</guid>
+      <link>http://fsprojects.github.io/FsBlog/blog/2013/11-09-getting-started/index.html</link>
+      <pubDate>Sat, 09 Nov 2013 11:38:14 GMT</pubDate>
       <description>&lt;p&gt;If you've much experience with other static site generators like &lt;em&gt;Octopress&lt;/em&gt; or &lt;em&gt;Jekyll&lt;/em&gt; most of this should be fairly familiar, if not, hopefully it won't be too difficult to pick up.&lt;/p&gt;
 
 
@@ -19,9 +16,9 @@
     </item>
     <item>
       <title>Hello, FsBlog!</title>
-      <guid>http://saxonmatt.co.uk/FsBlog/blog/2013/11-08-hello-fsblog</guid>
-      <link>http://saxonmatt.co.uk/FsBlog/blog/2013/11-08-hello-fsblog/index.html</link>
-      <pubDate>Fri, 08 Nov 2013 11:27:31 GMT</pubDate>
+      <guid>http://fsprojects.github.io/FsBlog/blog/2013/11-08-hello-fsblog</guid>
+      <link>http://fsprojects.github.io/FsBlog/blog/2013/11-08-hello-fsblog/index.html</link>
+      <pubDate>Fri, 08 Nov 2013 10:27:31 GMT</pubDate>
       <description>&lt;p&gt;&lt;strong&gt;FsBlog&lt;/strong&gt; aims to be a blog-aware static site generator, mostly built in &lt;code&gt;F#&lt;/code&gt; for .NET and Mono developers.&lt;/p&gt;
 
 

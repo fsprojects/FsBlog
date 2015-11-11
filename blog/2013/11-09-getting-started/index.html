@@ -4,36 +4,38 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>FsBlog</title>
-    <link rel="stylesheet" href="http://saxonmatt.co.uk/FsBlog/stylesheets/styles.css">
-    <link rel="stylesheet" href="http://saxonmatt.co.uk/FsBlog/stylesheets/pygment_trac.css">
-    <link rel="shortcut icon" href="http://saxonmatt.co.uk/FsBlog/favicon.png">
+    <link rel="stylesheet" href="http://fsprojects.github.io/FsBlog/stylesheets/styles.css">
+    <link rel="stylesheet" href="http://fsprojects.github.io/FsBlog/stylesheets/pygment_trac.css">
+    <link rel="shortcut icon" href="http://fsprojects.github.io/FsBlog/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <!-- FSharp.Formatting Styles --> 
-  	<link rel="stylesheet" type="text/css" media="screen" href="http://saxonmatt.co.uk/FsBlog/fsharp.formatting/tooltips.css" /> 
-  	<script type="text/javascript" src="http://saxonmatt.co.uk/FsBlog/fsharp.formatting/tooltips.js"></script>
+    <!-- FSharp.Formatting Styles -->
+  	<link rel="stylesheet" type="text/css" media="screen" href="http://fsprojects.github.io/FsBlog/fsharp.formatting/tooltips.css" />
+  	<script type="text/javascript" src="http://fsprojects.github.io/FsBlog/fsharp.formatting/tooltips.js"></script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   </head>
   <body>
   	<div class="wrapper">
 	  <header>
-	  	  <a href="http://saxonmatt.co.uk/FsBlog/index.html" class="falseheader">FsBlog</a>
+	  	  <a href="http://fsprojects.github.io/FsBlog/index.html" class="falseheader">FsBlog</a>
         <p>Blog aware, static site generation using F#.</p>
-        <p class="view"><a href="https://github.com/saxonmatt/FsBlog">View the Project on GitHub</a></p>
+
+        <p class="view"><a href="https://github.com/fsprojects/FsBlog">View the Project on GitHub</a></p>
         <ul>
-          <li><a href="https://github.com/saxonmatt/FsBlog">View On <strong>GitHub</strong></a></li>
-          <li><a href="https://github.com/saxonmatt/FsBlog/issues">Report a <strong>Bug</strong></a></li>
-          <li><a href="https://github.com/saxonmatt/FsBlog/issues/milestones">Check <strong>Progress</strong></a></li>
+          <li><a href="https://github.com/fsprojects/FsBlog">View On <strong>GitHub</strong></a></li>
+          <li><a href="https://github.com/fsprojects/FsBlog/issues">Report a <strong>Bug</strong></a></li>
+          <li><a href="https://github.com/fsprojects/FsBlog/issues/milestones">Check <strong>Progress</strong></a></li>
         </ul>
         <h2>Recent posts</h2>
-    		    <h3 class="h2link"><a href="http://saxonmatt.co.uk/FsBlog/blog/2013/11-09-getting-started/index.html">Getting Started</a></h3>
+    		    <h3 class="h2link"><a href="http://fsprojects.github.io/FsBlog/blog/2013/11-09-getting-started/index.html">Getting Started</a></h3>
     		    <p class="view"><small>    <time datetime="2013-11-09T12:38:14" pubdate data-updated="true">Nov 9, 2013</time>
 </small><br /><p>If you've much experience with other static site generators like <em>Octopress</em> or <em>Jekyll</em> most of this should be fairly familiar, if not, hopefully it won't be too difficult to pick up.</p>
 
 
 </p>
-    		    <h3 class="h2link"><a href="http://saxonmatt.co.uk/FsBlog/blog/2013/11-08-hello-fsblog/index.html">Hello, FsBlog!</a></h3>
+    		    <h3 class="h2link"><a href="http://fsprojects.github.io/FsBlog/blog/2013/11-08-hello-fsblog/index.html">Hello, FsBlog!</a></h3>
     		    <p class="view"><small>    <time datetime="2013-11-08T11:27:31" pubdate data-updated="true">Nov 8, 2013</time>
 </small><br /><p><strong>FsBlog</strong> aims to be a blog-aware static site generator, mostly built in <code>F#</code> for .NET and Mono developers.</p>
 
@@ -54,7 +56,7 @@
 
 <h2>Dependencies</h2>
 
-<p>Although X-Platform is a goal for the <a href="https://github.com/saxonmatt/FsBlog/issues?milestone=2&amp;state=open">not-too-distant-future</a> - at the moment you'll need:</p>
+<p>Although X-Platform is a goal for the <a href="https://github.com/fsprojects/FsBlog/issues?milestone=2&amp;state=open">not-too-distant-future</a> - at the moment you'll need:</p>
 
 <ul>
 <li>.NET 4.5</li>
@@ -75,7 +77,7 @@
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
-<span class="i">git</span> <span class="i">clone</span> <span class="i">git</span><span class="o">:</span><span class="c">//github.com/saxonmatt/FsBlog.git FsBlog</span>
+<span class="i">git</span> <span class="i">clone</span> <span class="i">git</span><span class="o">:</span><span class="c">//github.com/fsprojects/FsBlog.git FsBlog</span>
 <span class="i">cd</span> <span class="i">FsBlog</span></pre>
 </td>
 </tr>
@@ -118,7 +120,7 @@
 <span class="c">// Configuration.</span>
 <span class="c">// --------------------------------------------------------------------------------------</span>
 <span class="i">Environment</span><span class="o">.</span><span class="i">CurrentDirectory</span> <span class="o">&lt;-</span> <span class="k">__SOURCE_DIRECTORY__</span>
-<span class="k">let</span> <span class="i">root</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">http</span><span class="s">:</span><span class="s">/</span><span class="s">/</span><span class="s">saxonmatt</span><span class="s">.</span><span class="s">co</span><span class="s">.</span><span class="s">uk</span><span class="s">/</span><span class="s">FsBlog</span><span class="s">&quot;</span>
+<span class="k">let</span> <span class="i">root</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">http</span><span class="s">:</span><span class="s">/</span><span class="s">/</span><span class="s">fsprojects</span><span class="s">.</span><span class="s">github</span><span class="s">.</span><span class="s">io</span><span class="s">/</span><span class="s">FsBlog</span><span class="s">&quot;</span>
 <span class="k">let</span> <span class="i">title</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">FsBlog</span><span class="s"> </span><span class="s">-</span><span class="s"> </span><span class="s">F</span><span class="s">#</span><span class="s"> </span><span class="s">static</span><span class="s"> </span><span class="s">site</span><span class="s"> </span><span class="s">generation</span><span class="s">&quot;</span>
 <span class="k">let</span> <span class="i">description</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
 <span class="s">    </span><span class="s">FsBlog</span><span class="s"> </span><span class="s">aims</span><span class="s"> </span><span class="s">to</span><span class="s"> </span><span class="s">be</span><span class="s"> </span><span class="s">a</span><span class="s"> </span><span class="s">blog</span><span class="s">-</span><span class="s">aware</span><span class="s"> </span><span class="s">static</span><span class="s"> </span><span class="s">site</span><span class="s"> </span><span class="s">generator</span><span class="s">,</span><span class="s"> </span><span class="s">mostly</span><span class="s"> </span><span class="s">built</span><span class="s"> </span><span class="s">in</span><span class="s"> </span><span class="s">F</span><span class="s">#</span><span class="s">.</span><span class="s"> </span><span class="s">But</span><span class="s"> </span><span class="s">don&#39;t</span><span class="s"> </span><span class="s">worry</span><span class="s">,</span><span class="s"> </span>
@@ -182,6 +184,6 @@
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
   	</div>
-    <script src="http://saxonmatt.co.uk/FsBlog/javascripts/scale.fix.js"></script>
+    <script src="http://fsprojects.github.io/FsBlog/javascripts/scale.fix.js"></script>
   </body>
 </html>
