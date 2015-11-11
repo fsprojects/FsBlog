@@ -26,6 +26,6 @@ This set of tools have been pulled together using some of the following communit
 
 It is very early days and we haven't yet reached anything vaguely resembling a version 1.0 of the software.
 
-You can track the progress of the development, outstanding issues and check what we're working towards by checking out the [Issues and Milestones](https://github.com/saxonmatt/FsBlog/issues/milestones) section of our repository.
+You can track the progress of the development, outstanding issues and check what we're working towards by checking out the [Issues and Milestones](https://github.com/fsprojects/FsBlog/issues/milestones) section of our repository.
 
 If you find a bug, or have a request or whatever - please raise a new issue there! or even better make the change and open a pull request.
