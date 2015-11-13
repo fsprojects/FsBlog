@@ -1,13 +1,13 @@
 ﻿module FsBlogLib.Tests
 
-open Xunit
 open FsBlogLib.FileHelpers
 open FsBlogLib.BlogPosts
-open FsUnit.Xunit
 open System
 open System.IO
+open NUnit.Framework
+open FsUnit
 
-[<Fact>]
+[<Test>]
 let ``Create blog post`` () =
     let path = __SOURCE_DIRECTORY__ ++ "..\\source\\blog"
     let title = "FsharpTest"
