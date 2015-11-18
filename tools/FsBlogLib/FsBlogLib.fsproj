@@ -48,8 +48,10 @@
   <ItemGroup>
     <Compile Include="Template.fs" />
     <Compile Include="Razor.fs" />
+    <Compile Include="FileHelpersOperators.fs" />
     <Compile Include="FileHelpers.fs" />
     <Compile Include="BlogPosts.fs" />
+    <Compile Include="BlogCustomizations.fs" />
     <Compile Include="Blog.fs" />
     <None Include="paket.references" />
   </ItemGroup>
@@ -62,6 +64,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>

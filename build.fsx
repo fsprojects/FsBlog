@@ -11,6 +11,7 @@ This script is intended for use with [FAKE][fake] for the build process of the
 #r "packages/FAKE/tools/FakeLib.dll"
 open Fake
 open Fake.Git
+open Fake.Testing
 open Fake.AssemblyInfoFile
 open Fake.ReleaseNotesHelper
 open System
@@ -75,9 +76,9 @@ Target "Build" (fun _ ->
 
 Target "RunTests" (fun _ ->
     !! testAssemblies 
-    |> xUnit (fun p ->
+    |> NUnit (fun p ->
         { p with
-            ShadowCopy = false
+            DisableShadowCopy = true
             TimeOut = TimeSpan.FromMinutes 20.
             })
 )
@@ -88,5 +89,6 @@ Target "RunTests" (fun _ ->
 "Clean"
     ==> "AssemblyInfo"
     ==> "Build"
+    ==> "RunTests"
 
 RunTargetOrDefault "Build"

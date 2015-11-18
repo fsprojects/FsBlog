@@ -1,1 +1,5 @@
-FsUnit.xUnit
+FSharp.Configuration
+FSharp.Formatting
+NUnit
+RazorEngine
+File:FsUnit.fs .

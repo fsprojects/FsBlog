@@ -2,8 +2,8 @@
 
 open System
 open System.IO
-open BlogPosts
-open FileHelpers
+open FsBlogLib.BlogPosts
+open FsBlogLib.FileHelpers
 open System.Xml.Linq
 open FSharp.Literate
 
@@ -11,15 +11,16 @@ open FSharp.Literate
 // Blog - the main blog functionality
 // --------------------------------------------------------------------------------------
 
-module Blog = 
+/// Represents the model that is passed to all pages
+type Model = 
+    { Posts: BlogHeader[] 
+      MonthlyPosts: (int * string * seq<BlogHeader>)[]
+      TaglyPosts: (string * string * seq<BlogHeader>)[]
+      GenerateAll: bool
+      Root: string }
 
-  /// Represents the model that is passed to all pages
-  type Model = 
-    { Posts : BlogHeader[] 
-      MonthlyPosts : (int * string * seq<BlogHeader>)[]
-      TaglyPosts : (string * string * seq<BlogHeader>)[]
-      GenerateAll : bool
-      Root : string }
+
+module Blog = 
 
   /// Walks over all blog post files and loads model (caches abstracts along the way)
   let LoadModel(tagRenames, transformer, (root:string), blog) = 
@@ -59,9 +60,10 @@ module Blog =
           use html = DisposableFile.CreateTemp(".html")
           File.WriteAllText(fsx.FileName, content |> RemoveScriptAbstractMarker)
           if ext = ".fsx" then
-            Literate.ProcessScriptFile(fsx.FileName, template, html.FileName, ?prefix=prefix)
+              Literate.ProcessScriptFile(fsx.FileName, template, html.FileName, ?prefix=prefix)
           else
-            Literate.ProcessMarkdown(fsx.FileName, template, html.FileName, ?prefix=prefix)
+              Literate.ProcessMarkdown(fsx.FileName, template, html.FileName, ?prefix=prefix, 
+                                       customizeDocument=BlogCustomizations.CustomizeDocument)
           let processed = File.ReadAllText(html.FileName)
           File.WriteAllText(html.FileName, header + processed)
           EnsureDirectory(Path.GetDirectoryName(target))
