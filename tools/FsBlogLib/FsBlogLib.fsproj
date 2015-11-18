@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Template.fs" />
     <Compile Include="Razor.fs" />
+    <Compile Include="FileHelpersOperators.fs" />
     <Compile Include="FileHelpers.fs" />
     <Compile Include="BlogPosts.fs" />
     <Compile Include="BlogCustomizations.fs" />

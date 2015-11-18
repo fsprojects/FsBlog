@@ -26,9 +26,7 @@ open System.Diagnostics
 open System.Text.RegularExpressions
 open System.Threading
 open RazorEngine
-open FsBlogLib.FileHelpers
-open FsBlogLib.BlogPosts
-open FsBlogLib.Blog
+open FsBlogLib
 open FSharp.Configuration
 open Suave
 open Suave.Web
@@ -48,7 +46,7 @@ open Suave.Types
 Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
 type Config = YamlConfig<"config/config.yml">
 
-let config = Config()
+let config = new Config()
 let root = config.url.AbsoluteUri
 let title = config.title
 let description = config.description
@@ -81,15 +79,15 @@ let rsscount = 20
 
 let buildSite (updateTagArchive) =
     let dependencies = [ yield! Directory.GetFiles(layouts) ] 
-    let noModel = { Model.Root = root; MonthlyPosts = [||]; Posts = [||]; TaglyPosts = [||]; GenerateAll = true }
-    let razor = FsBlogLib.Razor(layouts, Model = noModel)
-    let model = LoadModel(tagRenames, TransformAsTemp (template, source) razor, root, blog)
+    let noModel = { Root = root; MonthlyPosts = [||]; Posts = [||]; TaglyPosts = [||]; GenerateAll = true }
+    let razor = new Razor(layouts, Model = noModel)
+    let model =  Blog.LoadModel(tagRenames, Blog.TransformAsTemp (template, source) razor, root, blog)
 
     // Generate RSS feed
-    GenerateRss root title description model rsscount (output ++ "rss.xml")
+    Blog.GenerateRss root title description model rsscount (output ++ "rss.xml")
 
     let uk = System.Globalization.CultureInfo.GetCultureInfo("en-GB")
-    GeneratePostListing 
+    Blog.GeneratePostListing 
         layouts template blogIndex model model.MonthlyPosts 
         (fun (y, m, _) -> output ++ "blog" ++ "archive" ++ (m.ToLower() + "-" + (string y)) ++ "index.html")
         (fun (y, m, _) -> y = DateTime.Now.Year && m = uk.DateTimeFormat.GetMonthName(DateTime.Now.Month))
@@ -97,7 +95,7 @@ let buildSite (updateTagArchive) =
         (fun (_, _, p) -> p)
 
     if updateTagArchive then
-        GeneratePostListing 
+        Blog.GeneratePostListing 
             layouts template blogIndex model model.TaglyPosts
             (fun (_, u, _) -> output ++ "blog" ++ "tag" ++ u ++ "index.html")
             (fun (_, _, _) -> true)
@@ -105,18 +103,18 @@ let buildSite (updateTagArchive) =
             (fun (_, _, p) -> p)
 
     let filesToProcess = 
-        GetSourceFiles source output
-        |> SkipExcludedFiles exclude
-        |> TransformOutputFiles output
-        |> FilterChangedFiles dependencies special
+        FileHelpers.GetSourceFiles source output
+        |> FileHelpers.SkipExcludedFiles exclude
+        |> FileHelpers.TransformOutputFiles output
+        |> FileHelpers.FilterChangedFiles dependencies special
     
-    let razor = FsBlogLib.Razor(layouts, Model = model)
+    let razor = new Razor(layouts, Model = model)
     for current, target in filesToProcess do
-        EnsureDirectory(Path.GetDirectoryName(target))
+        FileHelpers.EnsureDirectory(Path.GetDirectoryName(target))
         printfn "Processing file: %s" (current.Substring(source.Length))
-        TransformFile template true razor None current target
+        Blog.TransformFile template true razor None current target
 
-    CopyFiles content output 
+    FileHelpers.CopyFiles content output 
 
 // --------------------------------------------------------------------------------------
 // Webserver stuff
@@ -195,9 +193,9 @@ Target "New" (fun _ ->
     
     match page, post, fsx with
     | "", "", "" -> traceError "Please specify either a new 'page', 'post' or 'fsx'."
-    | _, "", ""  -> CreateMarkdownPage source page
-    | "", _, ""  -> CreateMarkdownPost blog post
-    | "", "", _  -> CreateFsxPost blog fsx
+    | _, "", ""  -> BlogPosts.CreateMarkdownPage source page
+    | "", _, ""  -> BlogPosts.CreateMarkdownPost blog post
+    | "", "", _  -> BlogPosts.CreateFsxPost blog fsx
     | _, _, _    -> traceError "Please specify only one argument, 'post' or 'fsx'."
 )
 
