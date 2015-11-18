@@ -1,4 +1,4 @@
-﻿module FsBlogLib.Tests
+﻿module FsBlogLib.Tests.BlogPostsTests
 
 open FsBlogLib.FileHelpers
 open FsBlogLib.BlogPosts

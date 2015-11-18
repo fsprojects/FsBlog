@@ -29,6 +29,12 @@ tests/source/
 # FAKE temp dir
 .fake/
 
+# NUnit test
+TestResult.xml
+
+# Paket dir
+paket-files
+
 *_i.c
 *_p.c
 *.ilk

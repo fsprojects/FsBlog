@@ -2,27 +2,25 @@
 
 open System
 open System.IO
-open System.Text.RegularExpressions
-open System.Web
-open BlogPosts
-open FileHelpers
+open FsBlogLib.BlogPosts
+open FsBlogLib.FileHelpers
 open System.Xml.Linq
 open FSharp.Literate
-open FSharp.Markdown
 
 // --------------------------------------------------------------------------------------
 // Blog - the main blog functionality
 // --------------------------------------------------------------------------------------
 
-module Blog = 
+/// Represents the model that is passed to all pages
+type Model = 
+    { Posts: BlogHeader[] 
+      MonthlyPosts: (int * string * seq<BlogHeader>)[]
+      TaglyPosts: (string * string * seq<BlogHeader>)[]
+      GenerateAll: bool
+      Root: string }
 
-  /// Represents the model that is passed to all pages
-  type Model = 
-    { Posts : BlogHeader[] 
-      MonthlyPosts : (int * string * seq<BlogHeader>)[]
-      TaglyPosts : (string * string * seq<BlogHeader>)[]
-      GenerateAll : bool
-      Root : string }
+
+module Blog = 
 
   /// Walks over all blog post files and loads model (caches abstracts along the way)
   let LoadModel(tagRenames, transformer, (root:string), blog) = 
@@ -51,74 +49,6 @@ module Blog =
         |> Array.ofSeq
       Root = root.Replace('\\', '/') }
 
-  let youtubeFrame id =
-      sprintf "<iframe id=\"ytplayer\" type=\"text/html\" width=\"640\" height=\"390\" src=\"http://www.youtube.com/embed/%s?autoplay=0\" frameborder=\"0\"/>"
-        id
-
-  let rec matchSpan span =
-      match span with
-      | Strong (spans) -> 
-          let spans' = List.map matchSpan spans
-          Strong(spans')
-      | Emphasis (spans) -> 
-          let spans' = List.map matchSpan spans
-          Emphasis (spans')
-      | DirectLink (spans, (link, label)) ->
-          let linkUri = new Uri(link)
-          if linkUri.DnsSafeHost.EndsWith("youtube.com") then
-              let urlParams = HttpUtility.ParseQueryString(linkUri.Query)
-              if urlParams.AllKeys |> Seq.exists (fun x -> x = "v") then 
-                  Literal(youtubeFrame urlParams.["v"])
-              else
-                  let spans' = List.map matchSpan spans
-                  DirectLink (spans', (link, label))
-          else
-              let spans' = List.map matchSpan spans
-              DirectLink (spans', (link, label))
-      | IndirectLink (spans, link, label) -> 
-          let spans' = List.map matchSpan spans
-          IndirectLink (spans', link, label)
-      | other -> other
-  
-  let rec matchParagraph paragraph =
-      match paragraph with
-      | Heading (i, spans) -> 
-          let spans = List.map matchSpan spans
-          Heading(i, spans)
-      | Paragraph spans -> 
-          let spans' = List.map matchSpan spans
-          Paragraph(spans')
-      | ListBlock (kind, paragraphsList) -> 
-          let paragraphsList' =
-              paragraphsList |> List.map (fun paragraphs -> List.map matchParagraph paragraphs)
-          ListBlock(kind, paragraphsList')
-      | QuotedBlock paragraphs -> 
-          let paragraphs' = List.map matchParagraph paragraphs
-          QuotedBlock(paragraphs')
-      | Span spans -> 
-          let spans = List.map matchSpan spans
-          Span (spans)
-      | other -> other
-
-
-  let customize (context: ProcessingContext) (doc: LiterateDocument) =
-    
-//    let matchLink key (link: string, label)  =
-//        let url = new Uri(link)
-//        if Option.isNone label && url.DnsSafeHost.Contains("youtube.com") then
-//            Some(key, url)
-//        else
-//            None
-//
-//    let mapLinks =
-//        doc.DefinedLinks
-//        |> Seq.choose (fun x -> matchLink x.Key x.Value)
-
-    let paragraphs' = List.map matchParagraph doc.Paragraphs
-    
-    
-    doc.With(?paragraphs = Some paragraphs')
-
   let TransformFile template hasHeader (razor:FsBlogLib.Razor) prefix current target =     
     let html =
       match Path.GetExtension(current).ToLower() with
@@ -130,9 +60,10 @@ module Blog =
           use html = DisposableFile.CreateTemp(".html")
           File.WriteAllText(fsx.FileName, content |> RemoveScriptAbstractMarker)
           if ext = ".fsx" then
-            Literate.ProcessScriptFile(fsx.FileName, template, html.FileName, ?prefix=prefix)
+              Literate.ProcessScriptFile(fsx.FileName, template, html.FileName, ?prefix=prefix)
           else
-            Literate.ProcessMarkdown(fsx.FileName, template, html.FileName, ?prefix=prefix, ?customizeDocument=Some customize)
+              Literate.ProcessMarkdown(fsx.FileName, template, html.FileName, ?prefix=prefix, 
+                                       customizeDocument=BlogCustomizations.CustomizeDocument)
           let processed = File.ReadAllText(html.FileName)
           File.WriteAllText(html.FileName, header + processed)
           EnsureDirectory(Path.GetDirectoryName(target))

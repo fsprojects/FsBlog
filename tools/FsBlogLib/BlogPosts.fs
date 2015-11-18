@@ -5,19 +5,21 @@ open FSharp.Literate
 // --------------------------------------------------------------------------------------
 // Parsing blog posts etc.
 // --------------------------------------------------------------------------------------
+
+/// Type that stores information about blog posts
+type BlogHeader = 
+    { Title: string
+      Abstract: string
+      Description: string
+      Date: System.DateTime
+      Url: string
+      Tags: seq<string> }
+
+
 module BlogPosts = 
 
   open FileHelpers
   open System.Text.RegularExpressions
-
-  /// Type that stores information about blog posts
-  type BlogHeader = 
-    { Title : string
-      Abstract : string
-      Description : string
-      Date : System.DateTime
-      Url : string
-      Tags : seq<string> }
 
   /// Get all *.cshtml, *.html, *.md and *.fsx files in the blog directory
   let GetBlogFiles blog = seq {

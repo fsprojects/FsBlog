@@ -50,6 +50,7 @@
     <Compile Include="Razor.fs" />
     <Compile Include="FileHelpers.fs" />
     <Compile Include="BlogPosts.fs" />
+    <Compile Include="BlogCustomizations.fs" />
     <Compile Include="Blog.fs" />
     <None Include="paket.references" />
   </ItemGroup>

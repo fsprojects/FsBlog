@@ -89,5 +89,6 @@ Target "RunTests" (fun _ ->
 "Clean"
     ==> "AssemblyInfo"
     ==> "Build"
+    ==> "RunTests"
 
 RunTargetOrDefault "Build"
