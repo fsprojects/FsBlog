@@ -15,7 +15,7 @@ and tasks that operate with the static site generation.
 #r "RazorEngine.dll"
 #r "FsBlogLib.dll"
 #r "FSharp.Configuration.dll"
-#r "suave.dll"
+#r "Suave.dll"
 
 open Fake
 open Fake.Git
