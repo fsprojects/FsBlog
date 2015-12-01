@@ -16,7 +16,7 @@ FsBlog tends to rely on the fact that you're using the command line or terminal 
 
 ## Dependencies
 
-Although X-Platform is a goal for the [not-too-distant-future](https://github.com/saxonmatt/FsBlog/issues?milestone=2&state=open) - at the moment you'll need:
+Although X-Platform is a goal for the [not-too-distant-future](https://github.com/fsprojects/FsBlog/issues?milestone=2&state=open) - at the moment you'll need:
 
 * .NET 4.5
 * F# 3.0
@@ -29,7 +29,7 @@ If you follow the instructions for [using F# on Windows](http://fsharp.org/use/w
 
 First you'll need to clone the repo. On your command line, using git:
 
-    git clone git://github.com/saxonmatt/FsBlog.git FsBlog
+    git clone git://github.com/fsprojects/FsBlog.git FsBlog
     cd FsBlog
 
 Next, run the build:
@@ -46,7 +46,7 @@ Using your favourite F# code editor, edit the following section of the `./fsblog
     // Configuration.
     // --------------------------------------------------------------------------------------
     Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
-    let root = "http://saxonmatt.co.uk/FsBlog"
+    let root = "http://fsprojects.github.io/FsBlog"
     let title = "FsBlog - F# static site generation"
     let description = """
         FsBlog aims to be a blog-aware static site generator, mostly built in F#. But don't worry, 

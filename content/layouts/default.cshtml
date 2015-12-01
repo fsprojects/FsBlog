@@ -1,4 +1,4 @@
-﻿@using System.Linq
+@using System.Linq
 @helper PostDate(DateTime rawDate) {
     <time datetime="@rawDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss")" pubdate data-updated="true">@rawDate.ToString("MMM d, yyyy")</time>
 }
@@ -34,11 +34,11 @@
 	  	  <a href="@Model.Root/index.html" class="falseheader">FsBlog</a>
         <p>Blog aware, static site generation using F#.</p>
 
-        <p class="view"><a href="https://github.com/saxonmatt/FsBlog">View the Project on GitHub</a></p>
+        <p class="view"><a href="https://github.com/fsprojects/FsBlog">View the Project on GitHub</a></p>
         <ul>
-          <li><a href="https://github.com/saxonmatt/FsBlog">View On <strong>GitHub</strong></a></li>
-          <li><a href="https://github.com/saxonmatt/FsBlog/issues">Report a <strong>Bug</strong></a></li>
-          <li><a href="https://github.com/saxonmatt/FsBlog/issues/milestones">Check <strong>Progress</strong></a></li>
+          <li><a href="https://github.com/fsprojects/FsBlog">View On <strong>GitHub</strong></a></li>
+          <li><a href="https://github.com/fsprojects/FsBlog/issues">Report a <strong>Bug</strong></a></li>
+          <li><a href="https://github.com/fsprojects/FsBlog/issues/milestones">Check <strong>Progress</strong></a></li>
         </ul>
         <h2>Recent posts</h2>
         @foreach (var post in Enumerable.Take(Model.Posts, 5))
