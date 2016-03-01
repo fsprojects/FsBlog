@@ -1,0 +1,22 @@
+@{
+    Layout = "default";
+    Title = "FsBlog";
+    Description = "A blog aware static site generator in mostly F#";
+    int i = 0;
+}
+
+      @foreach (var post in Model.Posts)
+      {
+        <div id="@i" class="section p-@i">
+
+            <div class="subtlecircle sectiondivider imaged">
+                <img src="post.Icon" alt="section icon" />
+                <h5 class="icon-title">@post.Title</h5>
+            </div>
+            <div class="container post.style">
+                @post.Abstract
+            </div>
+        </div>
+
+          i++;
+      }

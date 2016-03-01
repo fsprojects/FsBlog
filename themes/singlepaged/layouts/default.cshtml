@@ -1,0 +1,79 @@
+﻿@{
+    int i = 0;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>@Title</title>
+    <meta name="description" content="@ViewBag.MetaDescription" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="@Model.Root/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="@Model.Root/css/screen.css" />
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+
+    <!-- FSharp.Formatting Styles -->
+    <link rel="stylesheet" type="text/css" media="screen" href="@Model.Root/fsharp.formatting/tooltips.css" />
+    <script type="text/javascript" src="@Model.Root/fsharp.formatting/tooltips.js"></script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+
+<body>
+    <div id="main">
+        <nav><ul>
+		  @foreach (var post in Model.Posts)
+		  {
+                <li class="p-@i"><a href="#@i">@post.Title</a></li>
+				
+				i++;
+          }
+        </ul></nav>
+
+		<div class="section p-intro" id="intro">
+        
+        <div class="container center">
+          <h3 class="text-purple"><em>whoa, hey an open-source</em></h3>
+
+<p><span style="font-size:100px; background:rgba(255,166,0,0.1)" class="fa-stack subtlecircle">
+  <i class="fa fa-circle fa-stack-2x text-white"></i>
+  <i class="fa fa-bicycle fa-stack-1x text-orange"></i>
+</span></p>
+
+<h1 class="text-purple">single-page jekyll theme</h1>
+
+<p>…it’s focused on delivering information quickly, easily, configurably, and stylishly!</p>
+
+<p>Want to make a single-page site to show off something cool? Go <a href="https://github.com/t413/SinglePaged">fork me on github!</a></p>
+
+<p><span id="forkongithub">
+  <a class="bg-blue" href="https://github.com/t413/SinglePaged">
+    Fork me on GitHub
+  </a>
+</span></p>
+
+        </div>
+      </div>
+		
+		
+        @RenderBody()
+
+        <div id="footer" class="section text-white">
+            <div class="container">
+                <section class="copyright"><a href="@Model.Root">@Model.BlogTitle</a> &copy; @DateTime.Now.Year</section>
+                <section class="poweredby">Proudly published with <a href="https://github.com/fsprojects/FsBlog">FsBlog</a></section>
+            </div>
+        </div>
+
+    </div>  
+    <script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="@Model.Root/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="@Model.Root/js/index.js"></script>
+</body>
+</html>
