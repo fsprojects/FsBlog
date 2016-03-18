@@ -70,6 +70,7 @@ table.pre td {
   padding:0px;
   white-space:normal;
   margin:0px;
+  border:none;
 }
 table.pre td.lines {
   width:30px;

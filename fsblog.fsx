@@ -78,9 +78,9 @@ let rsscount = 20
 
 let buildSite (updateTagArchive) =
     let dependencies = [ yield! Directory.GetFiles(layouts) ]
-    let noModel = { Root = root; MonthlyPosts = [||]; Posts = [||]; TaglyPosts = [||]; GenerateAll = true }
+    let noModel = { Root = root; BlogTitle = title; MonthlyPosts = [||]; Posts = [||]; TaglyPosts = [||]; GenerateAll = true }
     let razor = new Razor(layouts, Model = noModel)
-    let model =  Blog.LoadModel(tagRenames, Blog.TransformAsTemp (template, source) razor, root, blog)
+    let model =  Blog.LoadModel(tagRenames, Blog.TransformAsTemp (template, source) razor, root, blog, title)
 
     // Generate RSS feed
     Blog.GenerateRss root title description model rsscount (output ++ "rss.xml")
@@ -162,7 +162,6 @@ let startWebServer () =
 
 /// Regenerates the entire static website from source files (markdown and fsx).
 Target "Generate" (fun _ ->
-
     buildSite (true)
 )
 

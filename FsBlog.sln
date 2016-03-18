@@ -1,18 +1,16 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{ACDC1C0A-1528-4BAC-BFE2-57BF1BEE5154}"
 	ProjectSection(SolutionItems) = preProject
-		..\FsBlog\paket.dependencies = ..\FsBlog\paket.dependencies
-		..\FsBlog\paket.lock = ..\FsBlog\paket.lock
+		paket.dependencies = paket.dependencies
+		paket.lock = paket.lock
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{8E03BE4F-38F8-4701-AF77-B49950F254F5}"
 	ProjectSection(SolutionItems) = preProject
 		FsBlog.nuspec = FsBlog.nuspec
-		tools\packages.config = tools\packages.config
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{14C8B79A-1276-4B1C-BE97-4ED715860DE8}"
