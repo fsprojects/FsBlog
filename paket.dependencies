@@ -6,6 +6,6 @@ nuget NuGet.CommandLine
 nuget FAKE
 nuget RazorEngine
 nuget suave
-nuget NUnit 
+nuget NUnit
 nuget NUnit.Runners
 github forki/FsUnit FsUnit.fs

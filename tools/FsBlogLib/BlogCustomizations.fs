@@ -29,10 +29,10 @@ module BlogCustomizations =
 
     let rec private matchSpan span =
         match span with
-        | Strong (spans) -> 
+        | Strong (spans) ->
             let spans' = List.map matchSpan spans
             Strong(spans')
-        | Emphasis (spans) -> 
+        | Emphasis (spans) ->
             let spans' = List.map matchSpan spans
             Emphasis (spans')
         | DirectLink ([Literal(linkText)], (link, label)) as orgLink
@@ -44,27 +44,27 @@ module BlogCustomizations =
         | DirectLink (spans, (link, label)) ->
             let spans' = List.map matchSpan spans
             DirectLink (spans', (link, label))
-        | IndirectLink (spans, link, label) -> 
+        | IndirectLink (spans, link, label) ->
             let spans' = List.map matchSpan spans
             IndirectLink (spans', link, label)
         | other -> other
-  
+
     let rec private matchParagraph paragraph =
         match paragraph with
-        | Heading (i, spans) -> 
+        | Heading (i, spans) ->
             let spans = List.map matchSpan spans
             Heading(i, spans)
-        | Paragraph spans -> 
+        | Paragraph spans ->
             let spans' = List.map matchSpan spans
             Paragraph(spans')
-        | ListBlock (kind, paragraphsList) -> 
+        | ListBlock (kind, paragraphsList) ->
             let paragraphsList' =
                 paragraphsList |> List.map (fun paragraphs -> List.map matchParagraph paragraphs)
             ListBlock(kind, paragraphsList')
-        | QuotedBlock paragraphs -> 
+        | QuotedBlock paragraphs ->
             let paragraphs' = List.map matchParagraph paragraphs
             QuotedBlock(paragraphs')
-        | Span spans -> 
+        | Span spans ->
             let spans = List.map matchSpan spans
             Span (spans)
         | other -> other
