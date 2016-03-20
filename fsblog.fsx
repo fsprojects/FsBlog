@@ -46,7 +46,6 @@ Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
 type Config = YamlConfig<"config/config.yml">
 
 let config = new Config()
-let root = config.url.AbsoluteUri
 let title = config.title
 let description = config.description
 let gitLocation = config.gitlocation
@@ -76,7 +75,17 @@ let rsscount = 20
 // Regenerates the site
 // --------------------------------------------------------------------------------------
 
-let buildSite (updateTagArchive) =
+type RoutingMode =
+    | Production
+    | Preview
+
+let buildSite routing updateTagArchive =
+
+    let root =
+        match routing with
+        | Production -> config.url.AbsoluteUri
+        | Preview -> "http://localhost:8080"
+
     let dependencies = [ yield! Directory.GetFiles(layouts) ]
     let noModel = { Root = root; BlogTitle = title; MonthlyPosts = [||]; Posts = [||]; TaglyPosts = [||]; GenerateAll = true }
     let razor = new Razor(layouts, Model = noModel)
@@ -127,7 +136,7 @@ let handleWatcherEvents (events:FileChange seq) =
         traceImportant <| sprintf "%s was changed." fi.Name
         match fi.Attributes.HasFlag FileAttributes.Hidden || fi.Attributes.HasFlag FileAttributes.Directory with
         | true -> ()
-        | _ ->  buildSite (false) // TODO optimize based on which file has changed
+        | _ ->  buildSite Preview false // TODO optimize based on which file has changed
     refreshEvent.Trigger()
 
 let socketHandler (webSocket : WebSocket) =
@@ -162,10 +171,13 @@ let startWebServer () =
 
 /// Regenerates the entire static website from source files (markdown and fsx).
 Target "Generate" (fun _ ->
-    buildSite (true)
+    buildSite Production true
 )
 
 Target "Preview" (fun _ ->
+
+    buildSite Preview true
+
     use watcherDynamic = !! (source + "**/*.*") |> WatchChanges (fun changes ->
         printfn "Dynamic: %A" changes
         handleWatcherEvents changes
@@ -233,13 +245,15 @@ Target "Install" (fun _ ->
            CopyRecursive (themes ++ theme ++ "source") source true |> ignore
 )
 
-"DoNothing" =?>
-("Install", hasBuildParam "theme")  ==>
-"Generate" ==> "Preview"
+"Clean" =?>
+("Install", hasBuildParam "theme") ==>
+"Generate"
 
-"Clean" ==>
-"Generate" ==>
-"GitClone" ==> "GitPublish"
+"Clean" =?>
+("Install", hasBuildParam "theme") ==>
+"Preview"
+
+"Generate" ==> "GitClone" ==> "GitPublish"
 
 // --------------------------------------------------------------------------------------
 // Run a specified target.
