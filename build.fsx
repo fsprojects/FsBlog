@@ -12,6 +12,7 @@ This script is intended for use with [FAKE][fake] for the build process of the
 open Fake
 open Fake.Git
 open Fake.Testing
+open Fake.Testing.NUnit3
 open Fake.AssemblyInfoFile
 open Fake.ReleaseNotesHelper
 open System
@@ -76,9 +77,9 @@ Target "Build" (fun _ ->
 
 Target "RunTests" (fun _ ->
     !! testAssemblies
-    |> NUnit (fun p ->
+    |> NUnit3 (fun p ->
         { p with
-            DisableShadowCopy = true
+            ShadowCopy = false
             TimeOut = TimeSpan.FromMinutes 20.
             })
 )
