@@ -29,12 +29,14 @@ If you follow the instructions for [using F# on Windows](http://fsharp.org/use/w
 
 First you'll need to clone the repo. On your command line, using git:
 
+    [lang=sh]
     git clone git://github.com/fsprojects/FsBlog.git FsBlog
     cd FsBlog
 
 Next, run the build:
 
-    build
+    [lang=sh]
+    ./build
 
 This should install a few [NuGet](http://www.nuget.org/) dependencies that FsBlog makes use of.
 
@@ -42,6 +44,7 @@ This should install a few [NuGet](http://www.nuget.org/) dependencies that FsBlo
 
 Using your favourite F# code editor, edit the following section of the `./fsblog.fsx` file in your repo:
 
+    [lang=fsharp]
     // --------------------------------------------------------------------------------------
     // Configuration.
     // --------------------------------------------------------------------------------------
@@ -60,7 +63,8 @@ There isn't a whole lot to change right now, but at some point you'll be able to
 
 Again on your command line:
 
-    fake new post="post title"
+    [lang=sh]
+    ./fake new post="post title"
 
 This will create a new file in the following location, ready for you to edit: `./source/blog/yyyy/MM-dd-title.md`.
 
@@ -68,10 +72,12 @@ This will create a new file in the following location, ready for you to edit: `.
 
 You can generate your website at any time from the command line using the following command:
 
-    fake generate
+    [lang=sh]
+    ./fake generate
 
 If you also want to preview your website, you can run the following command:
 
-    fake preview
+    [lang=sh]
+    ./fake preview
 
 The `preview` command will also `generate` the website too.

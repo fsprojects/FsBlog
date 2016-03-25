@@ -414,12 +414,12 @@ table thead:first-child tr:first-child td {
     border-top: 0;
 }
 
-table tbody + tbody { border-top: #EFEFEF 2px solid; }
+table:not(.pre) tbody + tbody { border-top: #EFEFEF 2px solid; }
 
-table table table { background-color: #FFF; }
+table:not(.pre) table table { background-color: #FFF; }
 
-table tbody > tr:nth-child(odd) > td,
-table tbody > tr:nth-child(odd) > th {
+table:not(.pre) tbody > tr:nth-child(odd) > td,
+table:not(.pre) tbody > tr:nth-child(odd) > th {
     background-color: #F6F6F6;
 }
 
