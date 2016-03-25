@@ -52,7 +52,7 @@ let moreComplexExpectedHtml = "<h1>This is a heading</h1>\r\n<p><iframe id=\"ytp
 let ``Transform post`` (post, expected: string) =
     use tempSource = DisposableFile.CreateTemp(".md")
     File.WriteAllText(tempSource.FileName, post)
-    let noModel = { Root = root; MonthlyPosts = [||]; Posts = [||]; TaglyPosts = [||]; GenerateAll = true ; BlogTitle = "Test blog" }
+    let noModel = { Root = root; MonthlyPosts = [||]; Posts = [||]; TaglyPosts = [||]; GenerateAll = true ; SiteTitle = "Test blog"; SiteSubtitle = "Subtitle." }
     let razor = new Razor(layouts, Model = noModel)
     use tempTarget = DisposableFile.CreateTemp()
     Blog.TransformFile template false razor None tempSource.FileName tempTarget.FileName

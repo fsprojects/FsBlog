@@ -47,6 +47,7 @@ type Config = YamlConfig<"config/config.yml">
 
 let config = new Config()
 let title = config.title
+let subtitle = config.subtitle
 let description = config.description
 let gitLocation = config.gitlocation
 let gitbranch = config.gitbranch
@@ -87,9 +88,9 @@ let buildSite routing updateTagArchive =
         | Preview -> "http://localhost:8080"
 
     let dependencies = [ yield! Directory.GetFiles(layouts) ]
-    let noModel = { Root = root; BlogTitle = title; MonthlyPosts = [||]; Posts = [||]; TaglyPosts = [||]; GenerateAll = true }
+    let noModel = { Root = root; SiteTitle = title; SiteSubtitle = subtitle; MonthlyPosts = [||]; Posts = [||]; TaglyPosts = [||]; GenerateAll = true }
     let razor = new Razor(layouts, Model = noModel)
-    let model =  Blog.LoadModel(tagRenames, Blog.TransformAsTemp (template, source) razor, root, blog, title)
+    let model =  Blog.LoadModel(tagRenames, Blog.TransformAsTemp (template, source) razor, root, blog, title, subtitle)
 
     // Generate RSS feed
     Blog.GenerateRss root title description model rsscount (output ++ "rss.xml")
