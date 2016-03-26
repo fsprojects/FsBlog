@@ -9,5 +9,5 @@ else
   # use mono
   [ ! -f .paket/paket.exe ] && mono --runtime=v4.0 .paket/paket.bootstrapper.exe
   mono --runtime=v4.0 .paket/paket.exe restore
-  mono --runtime=v4.0 packages/FAKE/tools/FAKE.exe $@ --fsiargs -d:MONO build.fsx
+  mono --runtime=v4.0 packages/FAKE/tools/FAKE.exe build.fsx -d:MONO $@
 fi
