@@ -230,7 +230,7 @@ Target "GitClone" (fun _ ->
 Target "GitPublish" (fun _ ->
     CopyRecursive output deploy true |> ignore
     CommandHelper.runSimpleGitCommand deploy "add ." |> printfn "%s"
-    let cmd = sprintf """commit -a -m "Update generated web site (%s)""" (DateTime.Now.ToString("dd MMMM yyyy"))
+    let cmd = sprintf """commit -a -m "Update generated web site (%s)" """ (DateTime.Now.ToString("dd MMMM yyyy"))
     CommandHelper.runSimpleGitCommand deploy cmd |> printfn "%s"
     Branches.push deploy
 )
