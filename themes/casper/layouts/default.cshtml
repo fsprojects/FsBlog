@@ -6,10 +6,11 @@
 
     <title>@Title</title>
     <meta name="description" content="@ViewBag.MetaDescription" />
-
+    
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <link rel="alternate" href="@Model.Root/rss.xml" title="@Model.SiteTitle" type="application/rss+xml">
     <link rel="shortcut icon" href="@Model.Root/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="@Model.Root/css/screen.css" />
