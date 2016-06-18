@@ -114,7 +114,7 @@ let buildSite routing updateTagArchive =
     let filesToProcess =
         FileHelpers.GetSourceFiles source output
         |> FileHelpers.SkipExcludedFiles exclude
-        |> FileHelpers.TransformOutputFiles output
+        |> FileHelpers.TransformOutputFiles output source
         |> FileHelpers.FilterChangedFiles dependencies special
 
     let razor = new Razor(layouts, Model = model)

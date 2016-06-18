@@ -91,7 +91,7 @@ module Blog =
     let count = Seq.length model.Posts
     let (!) name = XName.Get(name)
     let items =
-      [| for item in model.Posts |> Seq.take (if count < take then count else take) ->
+      [| for item in model.Posts |> Seq.take (if count < take then count else take) -> 
            XElement
             ( !"item",
               XElement(!"title", item.Title),

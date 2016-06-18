@@ -33,8 +33,10 @@ tests/source/
 # NUnit test
 TestResult.xml
 
-# Paket dir
+# Paket
 paket-files
+paket.exe
+.paket/paket.exe
 
 *_i.c
 *_p.c
@@ -173,5 +175,4 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
-.paket/paket.exe
 *.orig
