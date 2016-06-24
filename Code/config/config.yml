@@ -13,12 +13,12 @@ description: >
     using a command line or terminal, and have a degree of familiarity with Markdown and Razor
     syntax - you're good to go!
 
-source: source/
-blog: source/blog/
-blogIndex: source/blog/index.cshtml
+source: ../BlogContent/
+blog: ../BlogContent/blog/
+blogIndex: ../BlogContent/blog/index.cshtml
 layouts: layouts
 content: content
 template: tools/empty-template.html
-output: output/
+output: ../Output/
 deploy: deploy
 themes: themes

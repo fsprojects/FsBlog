@@ -90,9 +90,9 @@ module FileHelpers =
 
   /// If the output file is in some subdirectory, then generate /blog/foo.index.html
   /// For files in the root, generate just /index.html (etc.)
-  let TransformOutputFiles (output:string) files = seq {
+  let TransformOutputFiles (output:string) (source:string) files = seq {
     for file, (target:string) in files ->
-      let relativeOut = target.Substring(output.Length)
+      let relativeOut = target.Substring(source.Length)      
       // If it is not index & it is not in the root directory, then make it a sub-dir
       if not (relativeOut.EndsWith("index")) && (relativeOut.Contains("\\") || relativeOut.Contains("/"))
       then file, output ++ relativeOut ++ "index.html"
