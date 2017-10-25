@@ -8,7 +8,6 @@ open System.Collections.Generic
 
 open RazorEngine
 open RazorEngine.Templating
-open Microsoft.CSharp
 
 type MetadataDict() =
     let dictionary = new Dictionary<string, obj>()
