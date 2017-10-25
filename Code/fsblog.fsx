@@ -6,8 +6,8 @@ and tasks that operate with the static site generation.
 *)
 
 #I @"packages/FAKE/tools/"
-#I @"packages/FSharp.Configuration/lib/net40"
-#I @"packages/RazorEngine/lib/net40"
+#I @"packages/FSharp.Configuration/lib/net45"
+#I @"packages/RazorEngine/lib/net45"
 #I @"packages/Suave/lib/net40"
 #I @"bin/FsBlogLib"
 
@@ -146,7 +146,7 @@ let socketHandler (webSocket : WebSocket) =
       let! refreshed =
         Control.Async.AwaitEvent(refreshEvent.Publish)
         |> Suave.Sockets.SocketOp.ofAsync
-      do! webSocket.send Text (System.Text.Encoding.UTF8.GetBytes "refreshed") true
+      do! webSocket.send Text (new ByteSegment(System.Text.Encoding.UTF8.GetBytes "refreshed")) true
   }
 
 let startWebServer () =
@@ -154,7 +154,7 @@ let startWebServer () =
     let serverConfig =
         { defaultConfig with
            homeFolder = Some (FullName output)
-           bindings = [HttpBinding.mk HTTP IPAddress.Loopback 8080us]
+           bindings = [HttpBinding.create HTTP IPAddress.Loopback 8080us]
         }
     let app =
       choose [
