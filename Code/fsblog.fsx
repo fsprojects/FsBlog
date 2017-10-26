@@ -23,9 +23,7 @@ open System
 open System.IO
 open System.Net
 open System.Diagnostics
-open System.Text.RegularExpressions
 open System.Threading
-open RazorEngine
 open FsBlogLib
 open FSharp.Configuration
 open Suave
@@ -33,9 +31,7 @@ open Suave.Web
 open Suave.Files
 open Suave.Sockets
 open Suave.Sockets.Control
-open Suave.Sockets.AsyncSocket
 open Suave.WebSocket
-open Suave.Utils
 open Suave.Operators
 
 
@@ -65,7 +61,6 @@ let deploy = __SOURCE_DIRECTORY__ ++ config.deploy
 
 let tagRenames = List.empty<string*string> |> dict
 let exclude = []
-let references = []
 
 let special =
     [ source ++ "index.cshtml"

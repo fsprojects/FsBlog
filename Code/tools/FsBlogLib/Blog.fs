@@ -66,7 +66,7 @@ module Blog =
               Literate.ProcessScriptFile(fsx.FileName, template, html.FileName, ?prefix=prefix)
           else
               Literate.ProcessMarkdown(fsx.FileName, template, html.FileName, ?prefix=prefix,
-                                       customizeDocument=BlogCustomizations.CustomizeDocument)
+                                       customizeDocument = BlogCustomizations.CustomizeDocument)
           let processed = File.ReadAllText(html.FileName)
           File.WriteAllText(html.FileName, header + processed)
           EnsureDirectory(Path.GetDirectoryName(target))
