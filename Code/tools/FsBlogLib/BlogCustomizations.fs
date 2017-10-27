@@ -1,8 +1,6 @@
 ﻿namespace FsBlogLib
 
 open System
-open System.IO
-open System.Text.RegularExpressions
 open System.Web
 open FSharp.Markdown
 open FSharp.Literate

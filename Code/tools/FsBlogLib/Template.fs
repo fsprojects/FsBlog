@@ -8,7 +8,6 @@ open System.Collections.Generic
 
 open RazorEngine
 open RazorEngine.Templating
-open Microsoft.CSharp
 
 type MetadataDict() =
     let dictionary = new Dictionary<string, obj>()
@@ -119,5 +118,5 @@ type TemplateBaseExtensions<'T>() =
             else failwithf "Failed to find partial template: %s" templateName
 
         match model with
-        | Some(model) -> Razor.Parse(File.ReadAllText(filecontents), model)
-        | _ -> Razor.Parse(File.ReadAllText(filecontents))
+        | Some(model) -> Engine.Razor.RunCompile(File.ReadAllText(filecontents), templateName, model.GetType(), model)
+        | _ -> Engine.Razor.RunCompile(File.ReadAllText(filecontents), templateName)

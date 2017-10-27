@@ -6,8 +6,8 @@ and tasks that operate with the static site generation.
 *)
 
 #I @"packages/FAKE/tools/"
-#I @"packages/FSharp.Configuration/lib/net40"
-#I @"packages/RazorEngine/lib/net40"
+#I @"packages/FSharp.Configuration/lib/net45"
+#I @"packages/RazorEngine/lib/net45"
 #I @"packages/Suave/lib/net40"
 #I @"bin/FsBlogLib"
 
@@ -23,9 +23,7 @@ open System
 open System.IO
 open System.Net
 open System.Diagnostics
-open System.Text.RegularExpressions
 open System.Threading
-open RazorEngine
 open FsBlogLib
 open FSharp.Configuration
 open Suave
@@ -33,9 +31,7 @@ open Suave.Web
 open Suave.Files
 open Suave.Sockets
 open Suave.Sockets.Control
-open Suave.Sockets.AsyncSocket
 open Suave.WebSocket
-open Suave.Utils
 open Suave.Operators
 
 
@@ -65,7 +61,6 @@ let deploy = __SOURCE_DIRECTORY__ ++ config.deploy
 
 let tagRenames = List.empty<string*string> |> dict
 let exclude = []
-let references = []
 
 let special =
     [ source ++ "index.cshtml"
@@ -146,7 +141,7 @@ let socketHandler (webSocket : WebSocket) =
       let! refreshed =
         Control.Async.AwaitEvent(refreshEvent.Publish)
         |> Suave.Sockets.SocketOp.ofAsync
-      do! webSocket.send Text (System.Text.Encoding.UTF8.GetBytes "refreshed") true
+      do! webSocket.send Text (new ByteSegment(System.Text.Encoding.UTF8.GetBytes "refreshed")) true
   }
 
 let startWebServer () =
@@ -154,7 +149,7 @@ let startWebServer () =
     let serverConfig =
         { defaultConfig with
            homeFolder = Some (FullName output)
-           bindings = [HttpBinding.mk HTTP IPAddress.Loopback 8080us]
+           bindings = [HttpBinding.create HTTP IPAddress.Loopback 8080us]
         }
     let app =
       choose [

@@ -1,12 +1,9 @@
 ﻿module FsBlogLib.Tests.BlogTests
 
 open FsBlogLib.FileHelpers
-open FsBlogLib.BlogPosts
 open FsBlogLib
-open System
 open System.IO
 open NUnit.Framework
-open FsUnit
 
 let layouts = "content/layouts"
 let root = "http://localhost:8080"

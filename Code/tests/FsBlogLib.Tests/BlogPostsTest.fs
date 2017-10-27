@@ -4,7 +4,6 @@ open FsBlogLib
 open System
 open System.IO
 open NUnit.Framework
-open FsUnit
 
 [<Test>]
 let ``Create blog post`` () =
