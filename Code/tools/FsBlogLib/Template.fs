@@ -50,6 +50,9 @@ type MetadataDict() =
         member x.GetEnumerator() =
             dictionary.GetEnumerator() :> IEnumerator<KeyValuePair<string,obj>>
 
+module Global = 
+    let mutable LayoutsRoot = None
+
 [<AbstractClass>]
 type TemplateBaseExtensions<'T>() =
     inherit TemplateBase<'T>()
@@ -109,14 +112,16 @@ type TemplateBaseExtensions<'T>() =
         and set value = x.trySetViewBagValue<IDictionary<string, obj>> "Meta" value
 
 
-    member x.RenderPart(templateName) = x.RenderPart(templateName, None)
-    member x.RenderPart(templateName, ?model) =
+    member x.RenderPart(templateName) = x.RenderPart(templateName, null)
+    member x.RenderPart(templateName, model:obj) =
         printfn "    Resolving(partial): %s" templateName
-        let filecontents =
-            if File.Exists ("_includes"+System.IO.Path.DirectorySeparatorChar.ToString() + templateName) then "_includes"+System.IO.Path.DirectorySeparatorChar.ToString() + templateName
-            elif File.Exists ("_includes"+System.IO.Path.DirectorySeparatorChar.ToString() + templateName + ".cshtml") then "_includes"+System.IO.Path.DirectorySeparatorChar.ToString() + templateName + ".cshtml"
-            else failwithf "Failed to find partial template: %s" templateName
+        let file =
+            match Global.LayoutsRoot with
+            | Some root when File.Exists(Path.Combine(root, "_includes", templateName + ".cshtml")) ->
+                Path.Combine(root, "_includes", templateName + ".cshtml")
+            | Some root -> failwithf "root = %s" root       //Where I am looking for the _includes folder
+            | _ -> failwithf "Template file %s not found" templateName
 
         match model with
-        | Some(model) -> Engine.Razor.RunCompile(File.ReadAllText(filecontents), templateName, model.GetType(), model)
-        | _ -> Engine.Razor.RunCompile(File.ReadAllText(filecontents), templateName)
+        | null -> Razor.Parse(File.ReadAllText(file))
+        | model -> Razor.Parse(File.ReadAllText(file), model) 

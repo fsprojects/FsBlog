@@ -9,6 +9,7 @@ open RazorEngine.Configuration
 
 type Razor(layoutsRoot) =
     do
+        Global.LayoutsRoot <- Some layoutsRoot
         let config = new TemplateServiceConfiguration()
         config.Namespaces.Add("FsBlogLib") |> ignore
         config.EncodedStringFactory <- new RawStringFactory()
